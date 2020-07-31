@@ -8,15 +8,16 @@ namespace Smc.Infra.Data
         public ScmDbContext(DbContextOptions<ScmDbContext> dbContextOptions)
             : base(dbContextOptions) { }
 
-        public DbSet<Student> Students { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<Course> Courses { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<StudentCourse> StudentCourses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>()
-                .HasKey(x => x.Id);
+                .HasKey(st => st.Id);
 
             modelBuilder.Entity<Student>()
                 .Property(x => x.FirstName)
@@ -32,12 +33,15 @@ namespace Smc.Infra.Data
                 .Property(x => x.DateOfBirth)
                 .IsRequired();
 
-            //Adressess
-            //Courses
+            modelBuilder.Entity<Student>()
+                .HasMany(st => st.Addresses)
+                .WithOne(ad => ad.Student)
+                .HasForeignKey(ad => ad.StudentId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<Address>()
-                .HasKey(x => x.Id);
+                .HasKey(ad => ad.Id);
 
             modelBuilder.Entity<Address>()
                 .Property(x => x.AddresLineOne)
@@ -56,13 +60,14 @@ namespace Smc.Infra.Data
                 .Property(x => x.CountyOrProvince)
                 .HasMaxLength(100);
 
-            //Country
-
-
+            modelBuilder.Entity<Address>()
+                .HasOne(ad => ad.Country)
+                .WithMany(coun => coun.Addresses)
+                .HasForeignKey(ad => ad.Id);
 
 
             modelBuilder.Entity<Country>()
-                .HasKey(x => x.Id);
+                .HasKey(coun => coun.Id);
 
             modelBuilder.Entity<Country>()
                 .Property(x => x.Name)
@@ -70,14 +75,8 @@ namespace Smc.Infra.Data
                 .IsRequired();
 
 
-
-            modelBuilder.Entity<Country>()
-                .HasKey(x => x.Id);
-
             modelBuilder.Entity<Course>()
-                .Property(x => x.Name)
-                .HasMaxLength(150)
-                .IsRequired();
+                .HasKey(co => co.Id);
 
             modelBuilder.Entity<Course>()
                 .Property(x => x.TeacherName)
@@ -96,7 +95,23 @@ namespace Smc.Infra.Data
                 .Property(x => x.Capacity)
                 .IsRequired();
 
+
+            modelBuilder.Entity<StudentCourse>()
+                .HasKey(stCo => new { stCo.StudentId, stCo.CourseId });
+
+            modelBuilder.Entity<StudentCourse>()
+                .HasOne(stCo => stCo.Student)
+                .WithMany(st => st.StudentCourses)
+                .HasForeignKey(stCo => stCo.StudentId);
+
+            modelBuilder.Entity<StudentCourse>()
+                .HasOne(stCo => stCo.Course)
+                .WithMany(co => co.StudentCourses)
+                .HasForeignKey(stCo => stCo.CourseId);
+
+
             modelBuilder.Entity<Country>().HasData(this.GenerateCountries());
+
 
             base.OnModelCreating(modelBuilder);
         }

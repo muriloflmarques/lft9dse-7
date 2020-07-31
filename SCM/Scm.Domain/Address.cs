@@ -21,43 +21,52 @@
         private string _city;
         private string _countyOrProvince;
         private Country _country;
+        private Student _student;
 
-        public int Id { get; protected set; }
+        public int Id { get; protected private set; }
 
         public string AddresLineOne
         {
             get { return _addresLineOne; }
-            set { _addresLineOne = value; }
+            private set { _addresLineOne = value; }
         }
 
         public string AddresLineTwo
         {
             get { return _addresLineTwo; }
-            set { _addresLineTwo = value; }
+            private set { _addresLineTwo = value; }
         }
 
         public int? Number
         {
             get { return _number; }
-            set { _number = value; }
+            private set { _number = value; }
         }
 
         public string City
         {
             get { return _city; }
-            set { _city = value; }
+            private set { _city = value; }
         }
 
         public string CountyOrProvince
         {
             get { return _countyOrProvince; }
-            set { _countyOrProvince = value; }
+            private set { _countyOrProvince = value; }
         }
 
         public Country Country
         {
             get { return _country; }
-            set { _country = value; }
+            private set { _country = value; }
+        }
+
+        public int StudentId { get; protected private set; }
+
+        public Student Student
+        {
+            get { return _student; }
+            private set { _student = value; }
         }
     }
 }

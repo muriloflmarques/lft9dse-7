@@ -26,29 +26,29 @@ namespace Scm.Domain
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
+            private set { _name = value; }
         }
 
         public string TeacherName
         {
             get { return _teacherName; }
-            set { _teacherName = value; }
+            private set { _teacherName = value; }
         }
 
         public DateTime StartDate
         {
             get { return _startDate; }
-            set { _startDate = value; }
+            private set { _startDate = value; }
         }
 
         public DateTime EndDate
         {
             get { return _endDate; }
-            set { _endDate = value; }
+            private set { _endDate = value; }
         }
 
-        public string Code { get; set; }
-        public int Capacity { get; set; }
-        public ICollection<Student> Students { get; set; } = new HashSet<Student>();
+        public string Code { get; private set; }
+        public int Capacity { get; private set; }
+        public ICollection<StudentCourse> StudentCourses { get; private set; } = new HashSet<StudentCourse>();
     }
 }

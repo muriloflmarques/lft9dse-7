@@ -41,6 +41,6 @@ namespace Scm.Domain
         }
 
         public ICollection<Address> Addresses { get; private set; } = new HashSet<Address>();
-        public ICollection<Course> Courses { get; private set; } = new HashSet<Course>();
+        public ICollection<StudentCourse> StudentCourses { get; private set; } = new HashSet<StudentCourse>();
     }
 }

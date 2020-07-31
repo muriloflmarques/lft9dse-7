@@ -96,6 +96,8 @@ namespace Smc.Infra.Data
                 .Property(x => x.Capacity)
                 .IsRequired();
 
+            modelBuilder.Entity<Country>().HasData(this.GenerateCountries());
+
             base.OnModelCreating(modelBuilder);
         }
     }

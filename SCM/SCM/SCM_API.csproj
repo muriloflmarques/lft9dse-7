@@ -1,13 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Scm.Domain\Scm.Domain.csproj" />
     <ProjectReference Include="..\Scm.Infra.CrossCutting\Scm.Infra.CrossCutting.csproj" />
-    <ProjectReference Include="..\Scm.Infra.Data\Scm.Infra.Data.csproj" />
+    <ProjectReference Include="..\Scm.Service\Scm.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Scm.Infra.CrossCutting\Scm.Infra.CrossCutting.csproj" />
+  </ItemGroup>
+
 </Project>

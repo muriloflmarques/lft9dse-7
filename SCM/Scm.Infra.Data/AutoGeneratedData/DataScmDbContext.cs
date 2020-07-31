@@ -207,9 +207,16 @@ namespace Smc.Infra.Data
                 "Zimbabwe"
             };
 
+            int countryId = 0;
+
             return countryNames.Select(cName =>
             {
-                return new Country(cName);
+                countryId += 1;
+
+                var country = new Country(cName);
+                country.SetId(countryId);
+
+                return country;
             }).ToArray();
         }
     }

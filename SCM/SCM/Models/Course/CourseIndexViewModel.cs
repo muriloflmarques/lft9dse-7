@@ -2,7 +2,7 @@
 {
     public class CourseIndexViewModel
     {
-        public CourseViewModel[] Students { get; set; }
-        public CourseSearchViewModel SearchStudent { get; set; }
+        public CourseViewModel[] Courses { get; set; }
+        public CourseSearchViewModel CourseSearch { get; set; }
     }
 }

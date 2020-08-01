@@ -17,7 +17,7 @@ namespace Scm.Service
             this._studentRepository = studentRepository;
         }
 
-        public IEnumerable<Student> SelectStudents(SearchStudentDto searchStudentDto)
+        public IEnumerable<Student> SelectStudents(StudentSearchDto searchStudentDto)
         {
             var dbSet = _studentRepository.AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSetAsNoTracking());
 

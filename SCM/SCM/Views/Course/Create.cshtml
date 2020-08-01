@@ -1,0 +1,56 @@
+﻿
+@model SCM_API.Models.Course.CourseCreateViewModel
+
+@{
+    ViewData["Title"] = "How about a new Course?";
+}
+
+<h1>Create Course</h1>
+
+<div>
+    @using (Html.BeginForm("Create", "Course", FormMethod.Post))
+    {
+        <fieldset>
+            <legend>Course Data</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Course.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Course.Name)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Course.TeacherName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Course.TeacherName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Course.Capacity)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Course.Capacity)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Course.StartDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Course.StartDate, "{0:dd/MM/yyyy}")
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Course.EndDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Course.EndDate, "{0:dd/MM/yyyy}")
+            </div>
+
+            <button style="float:left;" type="submit" class="btn btn-info">Create</button>
+        </fieldset>
+    }
+</div>
+
+<a href="~/">Back</a>

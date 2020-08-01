@@ -13,26 +13,26 @@
             <legend>Search Params</legend>
 
             <div class="editor-label">
-                @Html.LabelFor(x => x.SearchStudent.FirstName)
-                @Html.EditorFor(x => x.SearchStudent.FirstName)
+                @Html.LabelFor(x => x.StudentSearch.FirstName)
+                @Html.EditorFor(x => x.StudentSearch.FirstName)
 
-                @Html.LabelFor(x => x.SearchStudent.Surname)
-                @Html.EditorFor(x => x.SearchStudent.Surname)
-
-
-                @Html.LabelFor(x => x.SearchStudent.CountryName)
-                @Html.EditorFor(x => x.SearchStudent.CountryName)
+                @Html.LabelFor(x => x.StudentSearch.Surname)
+                @Html.EditorFor(x => x.StudentSearch.Surname)
 
 
-                @Html.LabelFor(x => x.SearchStudent.CourseName)
-                @Html.EditorFor(x => x.SearchStudent.CourseName)
-
-                @Html.LabelFor(x => x.SearchStudent.CourseDate)
-                @Html.EditorFor(x => x.SearchStudent.CourseDate, "{0:dd/MM/yyyy}")
+                @Html.LabelFor(x => x.StudentSearch.CountryName)
+                @Html.EditorFor(x => x.StudentSearch.CountryName)
 
 
-                @Html.LabelFor(x => x.SearchStudent.CourseTeacherName)
-                @Html.EditorFor(x => x.SearchStudent.CourseTeacherName)
+                @Html.LabelFor(x => x.StudentSearch.CourseName)
+                @Html.EditorFor(x => x.StudentSearch.CourseName)
+
+                @Html.LabelFor(x => x.StudentSearch.CourseDate)
+                @Html.EditorFor(x => x.StudentSearch.CourseDate, "{0:dd/MM/yyyy}")
+
+
+                @Html.LabelFor(x => x.StudentSearch.CourseTeacherName)
+                @Html.EditorFor(x => x.StudentSearch.CourseTeacherName)
             </div>
 
             <button style="float:left;" type="submit" class="btn btn-info">Search!</button>

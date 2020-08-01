@@ -1,10 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SCM_API.Models.Course
 {
     public class CourseViewModel
     {
-        [DisplayName("Course Id")]
         public int Id { get; set; }
 
         [DisplayName("Course Name")]
@@ -17,10 +18,12 @@ namespace SCM_API.Models.Course
         public string TeacherName { get; set; }
 
         [DisplayName("Start Date")]
-        public string StartDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
 
         [DisplayName("End Date")]
-        public string EndDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
 
         [DisplayName("Course Code")]
         public string Code { get; set; }

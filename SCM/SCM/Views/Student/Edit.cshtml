@@ -2,10 +2,10 @@
 @model SCM_API.Models.Student.StudentViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Let's get this right!";
 }
 
-<h1>Edit Student @Html.Raw(@Model.FirstName.ToString()) @Html.Raw(@Model.Surname.ToString())</h1>
+<h1>Edit Student: @Html.Raw(@Model.FirstName.ToString()) @Html.Raw(@Model.Surname.ToString())</h1>
 
 <br />
 <br />
@@ -14,7 +14,7 @@
     @using (Html.BeginForm("Edit", "Student", FormMethod.Post))
     {
         <fieldset>
-            <legend>User Data</legend>
+            <legend>Student's new Data</legend>
 
             <div class="editor-label">
                 @Html.LabelFor(x => x.FirstName)

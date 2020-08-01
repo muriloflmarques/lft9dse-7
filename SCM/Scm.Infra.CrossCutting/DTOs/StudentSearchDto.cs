@@ -1,9 +1,8 @@
-﻿using Scm.Infra.CrossCutting.Enum;
-using System;
+﻿using System;
 
 namespace Scm.Infra.CrossCutting.DTOs
 {
-    public struct SearchStudentDto
+    public struct StudentSearchDto
     {
         public string FirstName { get; set; }
         public string Surname { get; set; }

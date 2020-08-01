@@ -8,7 +8,7 @@ namespace Scm.Domain
         protected Course() { }
 
         public Course(string name, string teacherName, DateTime startDate, DateTime endDate,
-            int capacity): base()
+            int capacity) : base()
         {
             this.Name = name;
             this.TeacherName = teacherName;
@@ -49,5 +49,14 @@ namespace Scm.Domain
         public string Code { get; private set; }
         public int Capacity { get; private set; }
         public ICollection<StudentCourse> StudentCourses { get; private set; } = new HashSet<StudentCourse>();
+
+        public void AlterBasicData(string name, string teacherName, DateTime startDate, DateTime endDate, int capacity)
+        {
+            this.Name = name;
+            this.TeacherName = teacherName;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+            this.Capacity = capacity;
+        }
     }
 }

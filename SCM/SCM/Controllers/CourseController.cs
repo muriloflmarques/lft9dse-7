@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Scm.Infra.CrossCutting.DTOs;
 using Scm.Infra.Data.Interface;
 using Scm.Service.Interface;
+using SCM_API.Mapper;
+using SCM_API.Models.Course;
 using Smc.Infra.Data.Interface;
+using System.Linq;
 
 namespace SCM_API
 {
@@ -25,31 +28,52 @@ namespace SCM_API
             this._courseRepository = courseRepository;
         }
 
-        // GET: Course
+        [HttpGet()]
         public ActionResult Index()
         {
-            return View();
+            var courseIndexViewModel = this.SearchCourses(new CourseSearchViewModel());
+
+            return View(courseIndexViewModel);
         }
 
-        // GET: Course/Details/5
-        public ActionResult Details(int id)
+        [HttpPost()]
+        public ActionResult Index(CourseIndexViewModel courseIndexViewModel)
         {
-            return View();
+            var returnCourseIndexViewModel = this.SearchCourses(courseIndexViewModel.CourseSearch);
+
+            return View(returnCourseIndexViewModel);
         }
 
-        // GET: Course/Create
+        private CourseIndexViewModel SearchCourses(CourseSearchViewModel courseSearchViewModel)
+        {
+            var courseSearchDto = _mapper.Map<CourseSearchDto>(courseSearchViewModel);
+
+            var courses = _courseService.SelectCourses(courseSearchDto);
+
+            return new CourseIndexViewModel()
+            {
+                Courses = courses?.Select(co => { return co.MapToViewModel(); }).ToArray(),
+                CourseSearch = courseSearchViewModel
+            };
+        }
+
+        [HttpGet()]
         public ActionResult Create()
         {
-            return View();
+            var courseCreateViewModel = new CourseCreateViewModel();
+
+            return View(courseCreateViewModel);
         }
 
-        // POST: Course/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [HttpPost()]
+        public ActionResult Create(CourseCreateViewModel courseCreateViewModel)
         {
             try
             {
+                var course = courseCreateViewModel.Course.MapToDomain();
+                _courseRepository.Insert(course);
+                _unitOfWork.Commit();
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -58,46 +82,66 @@ namespace SCM_API
             }
         }
 
-        // GET: Course/Edit/5
+        [HttpGet()]
         public ActionResult Edit(int id)
         {
-            return View();
-        }
+            var dbSet = _courseRepository.AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSet());
 
-        // POST: Course/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            var course = _courseRepository.SelectById(dbSet, id);
+
+            if (course == null)
             {
+                //the better approach would be redirecting to ErrorPage
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            var viewMap = course.MapToViewModel();
+
+            return View(viewMap);
         }
 
-        // GET: Course/Delete/5
+        [HttpPost()]
+        public ActionResult Edit(CourseViewModel courseViewModel)
+        {
+            var dbSet = _courseRepository
+                .AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSetAsNoTracking());
+
+            var course = _courseRepository.SelectById(dbSet, courseViewModel.Id);
+
+            //if course Null, then the better approach would be redirecting to ErrorPage
+            if (course != null)
+            {
+                course.AlterBasicData(
+                    name: courseViewModel.Name,
+                    teacherName: courseViewModel.TeacherName,
+                    startDate: courseViewModel.StartDate,
+                    endDate: courseViewModel.EndDate,
+                    capacity: courseViewModel.Capacity);
+
+                _courseRepository.Update(course);
+
+                _unitOfWork.Commit();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet()]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
+            var dbSet = _courseRepository
+                .AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSetAsNoTracking());
 
-        // POST: Course/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            var COURSE = _courseRepository.SelectById(dbSet, id);
+
+            //if course Null, then the better approach would be redirecting to ErrorPage
+            if (COURSE != null)
             {
-                return RedirectToAction(nameof(Index));
+                _courseRepository.Delete(COURSE);
+                _unitOfWork.Commit();
             }
-            catch
-            {
-                return View();
-            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

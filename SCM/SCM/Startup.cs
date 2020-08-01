@@ -10,6 +10,7 @@ using Scm.Infra.Data;
 using Scm.Infra.Data.Interface;
 using Scm.Service;
 using Scm.Service.Interface;
+using SCM_API.Models.Course;
 using SCM_API.Models.Student;
 using Smc.Infra.Data;
 using Smc.Infra.Data.Interface;
@@ -33,10 +34,17 @@ namespace SCM
 
             var mapperConfiguration = new MapperConfiguration(configure =>
             {
-                configure.CreateMap<SearchStudentViewModel, SearchStudentDto>()
+                configure.CreateMap<StudentSearchViewModel, StudentSearchDto>()
                     .ForMember(dto => dto.CourseDate, option =>
                     {
-                        option.PreCondition(vModel => vModel.CourseDate != DateTime.MinValue);
+                        option.PreCondition(vModel => vModel.CourseDate.HasValue && vModel.CourseDate.Value.Year > 1752);
+                        option.MapFrom(vModel => vModel.CourseDate);
+                    });
+
+                configure.CreateMap<CourseSearchViewModel, CourseSearchDto>()
+                    .ForMember(dto => dto.CourseDate, option =>
+                    {
+                        option.PreCondition(vModel => vModel.CourseDate.HasValue && vModel.CourseDate.Value.Year > 1752);
                         option.MapFrom(vModel => vModel.CourseDate);
                     });
             });
@@ -55,9 +63,9 @@ namespace SCM
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IStudentRepository, StudentRepository>();
-            
+
             services.AddScoped<ICourseService, CourseService>();
-            services.AddScoped<ICourseRepository, CourseRepository>();            
+            services.AddScoped<ICourseRepository, CourseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Scm.Service\Scm.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Course\" />
-  </ItemGroup>
-
 </Project>

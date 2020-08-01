@@ -2,7 +2,7 @@
 @model SCM_API.Models.Student.StudentCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create a whole new Student!";
 }
 
 <h1>Create Student</h1>
@@ -11,7 +11,7 @@
     @using (Html.BeginForm("Create", "Student", FormMethod.Post))
     {
     <fieldset>
-        <legend>User Data</legend>
+        <legend>Student Data</legend>
 
         <div class="editor-label">
             @Html.LabelFor(x => x.Student.FirstName)

@@ -2,5 +2,6 @@
 {
     public class CourseCreateViewModel
     {
+        public CourseViewModel Course { get; set; }
     }
 }

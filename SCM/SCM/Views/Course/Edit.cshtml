@@ -1,0 +1,59 @@
+﻿
+@model SCM_API.Models.Course.CourseViewModel
+
+@{
+    ViewData["Title"] = "How should this Course be?";
+}
+
+<h1>Edit the Course: "@Html.Raw(@Model.Name.ToString())"</h1>
+
+<br />
+<br />
+
+<div>
+    @using (Html.BeginForm("Edit", "Course", FormMethod.Post))
+    {
+        <fieldset>
+            <legend>Course Data</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.TeacherName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.TeacherName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Capacity)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Capacity)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.StartDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.StartDate, "{0:dd/MM/yyyy}")
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.EndDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.EndDate, "{0:dd/MM/yyyy}")
+            </div>
+
+            <button style="float:left;" type="submit" class="btn btn-info">Confirm</button>
+        </fieldset>
+    }
+</div>
+
+@Html.ActionLink("Back", "Index", "Course")

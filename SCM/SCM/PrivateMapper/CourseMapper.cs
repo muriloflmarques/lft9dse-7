@@ -14,10 +14,18 @@ namespace SCM_API.Mapper
 
                 Name = course.Name,
                 TeacherName = course.TeacherName,
-                StartDate = course.StartDate.FormatDateTimeToViewModel(),
-                EndDate = course.EndDate.FormatDateTimeToViewModel(),
+                StartDate = course.StartDate,
+                EndDate = course.EndDate,
                 Capacity = course.Capacity
             };
         }
+
+        public static Course MapToDomain(this CourseViewModel courseViewModel) =>
+            new Course(
+                name: courseViewModel.Name,
+                teacherName: courseViewModel.TeacherName,
+                startDate: courseViewModel.StartDate,
+                endDate: courseViewModel.EndDate,
+                capacity: courseViewModel.Capacity);       
     }
 }

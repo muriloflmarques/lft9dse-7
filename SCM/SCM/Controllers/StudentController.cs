@@ -31,7 +31,7 @@ namespace SCM_API
         [HttpGet()]
         public ActionResult Index()
         {
-            var studentIndexViewModel = this.SearchStudents(new SearchStudentViewModel());
+            var studentIndexViewModel = this.SearchStudents(new StudentSearchViewModel());
 
             return View(studentIndexViewModel);
         }
@@ -39,30 +39,30 @@ namespace SCM_API
         [HttpPost()]
         public ActionResult Index(StudentIndexViewModel studentIndexViewModel)
         {
-            var searchStudentViewModel = this.SearchStudents(studentIndexViewModel.SearchStudent);
+            var returnStudentIndexViewModel = this.SearchStudents(studentIndexViewModel.StudentSearch);
 
-            return View(searchStudentViewModel);
+            return View(returnStudentIndexViewModel);
         }
 
-        private StudentIndexViewModel SearchStudents(SearchStudentViewModel searchStudentViewModel)
+        private StudentIndexViewModel SearchStudents(StudentSearchViewModel studentSearchViewModel)
         {
-            var searchStudentDto = _mapper.Map<SearchStudentDto>(searchStudentViewModel);
+            var studentSearchDto = _mapper.Map<StudentSearchDto>(studentSearchViewModel);
 
-            var students = _studentService.SelectStudents(searchStudentDto);
+            var students = _studentService.SelectStudents(studentSearchDto);
 
             return new StudentIndexViewModel()
             {
                 Students = students?.Select(st => { return st.MapToViewModel(); }).ToArray(),
-                SearchStudent = searchStudentViewModel
+                StudentSearch = studentSearchViewModel
             };
         }
 
         [HttpGet()]
         public ActionResult Create()
         {
-            var viewData = new StudentCreateViewModel();
+            var studentCreateViewModel = new StudentCreateViewModel();
 
-            return View(viewData);
+            return View(studentCreateViewModel);
         }
 
         [HttpPost()]
@@ -95,9 +95,9 @@ namespace SCM_API
                 return RedirectToAction(nameof(Index));
             }
 
-            var viewMap = student.MapToViewModel();
+            var studentViewModel = student.MapToViewModel();
 
-            return View(viewMap);
+            return View(studentViewModel);
         }
 
         [HttpPost()]

@@ -6,6 +6,6 @@ namespace Scm.Service.Interface
 {
     public interface IStudentService
     {
-        IEnumerable<Student> SelectStudents(SearchStudentDto selectStudentDto);
+        IEnumerable<Student> SelectStudents(StudentSearchDto selectStudentDto);
     }
 }

@@ -6,7 +6,7 @@ namespace SCM_API.Mapper
 {
     public static class CourseMapper
     {
-        public static CourseViewModel MapToViewModel(this CourseController course)
+        public static CourseViewModel MapToViewModel(this Course course)
         {
             return new CourseViewModel()
             {

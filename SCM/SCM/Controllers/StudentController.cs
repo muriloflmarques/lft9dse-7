@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Scm.Infra.CrossCutting.DTOs;
-using Scm.Infra.CrossCutting.Enum;
 using Scm.Infra.Data.Interface;
 using Scm.Service.Interface;
 using SCM_API.Mapper;
 using SCM_API.Models.Student;
 using Smc.Infra.Data.Interface;
-using System;
 using System.Linq;
 
 namespace SCM_API
@@ -30,7 +28,6 @@ namespace SCM_API
             this._studentRepository = studentRepository;
         }
 
-        // GET: StudentController
         [HttpGet()]
         public ActionResult Index()
         {
@@ -39,7 +36,6 @@ namespace SCM_API
             return View(studentIndexViewModel);
         }
 
-        // GET: StudentController
         [HttpPost()]
         public ActionResult Index(StudentIndexViewModel studentIndexViewModel)
         {
@@ -61,23 +57,7 @@ namespace SCM_API
             };
         }
 
-        //[HttpPost]
-        //public ActionResult Search(SearchStudentViewModel searchStudentViewModel)
-        //{
-        //    var searchStudentDto = _mapper.Map<SearchStudentDto>(searchStudentViewModel);
-
-        //    var students = _studentService.SelectStudents(searchStudentDto);
-
-        //    var viewModel = new StudentIndexViewModel()
-        //    {
-        //        Students = students?.Select(st => { return st.MapToViewModel(); }).ToArray()
-        //    };
-
-        //    return View(viewModel);
-        //}
-
-        // GET: StudentController/Create
-        [HttpGet]
+        [HttpGet()]
         public ActionResult Create()
         {
             var viewData = new StudentCreateViewModel();
@@ -85,8 +65,7 @@ namespace SCM_API
             return View(viewData);
         }
 
-        // POST: StudentController/Create
-        [HttpPost]
+        [HttpPost()]
         public ActionResult Create(StudentCreateViewModel studentCreateViewModel)
         {
             try
@@ -103,7 +82,7 @@ namespace SCM_API
             }
         }
 
-        // GET: StudentController/Edit/5
+        [HttpGet()]
         public ActionResult Edit(int id)
         {
             var dbSet = _studentRepository.AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSet());
@@ -121,8 +100,7 @@ namespace SCM_API
             return View(viewMap);
         }
 
-        // POST: StudentController/Edit/5
-        [HttpPost]
+        [HttpPost()]
         public ActionResult Edit(StudentViewModel studentViewModel)
         {
             var dbSet = _studentRepository
@@ -147,7 +125,7 @@ namespace SCM_API
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: StudentController/Delete/5
+        [HttpGet()]
         public ActionResult Delete(int id)
         {
             var dbSet = _studentRepository

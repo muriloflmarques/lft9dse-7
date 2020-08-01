@@ -22,7 +22,7 @@ namespace Scm.Infra.Data
             this._scmDbContext.Set<Student>();
 
         public override IQueryable<Student> GetDbSetAsNoTracking() =>
-            this._scmDbContext.Set<Student>().AsNoTracking();
+            this.GetDbSet().AsNoTracking();
 
     }
 }

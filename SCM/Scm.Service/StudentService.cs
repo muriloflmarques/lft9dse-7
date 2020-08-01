@@ -25,9 +25,7 @@ namespace Scm.Service
                 st => 
                     (string.IsNullOrWhiteSpace(searchStudentDto.FirstName) || st.FirstName.Contains(searchStudentDto.FirstName))
                     &&
-                    (string.IsNullOrWhiteSpace(searchStudentDto.Surname) || st.Surname.Contains(searchStudentDto.Surname))
-                    &&
-                    (string.IsNullOrWhiteSpace(searchStudentDto.CountryName) || st.Addresses.Any(ad=>ad.Country.Name.Contains(searchStudentDto.CountryName)))
+                    (string.IsNullOrWhiteSpace(searchStudentDto.Surname) || st.Surname.Contains(searchStudentDto.Surname))                    
                     &&
                     (string.IsNullOrWhiteSpace(searchStudentDto.CourseName) || st.StudentCourses.Any(stCo => stCo.Course.Name.Contains(searchStudentDto.CourseName)))
                     &&

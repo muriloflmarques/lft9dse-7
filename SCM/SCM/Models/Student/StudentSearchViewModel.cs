@@ -10,9 +10,6 @@ namespace SCM_API.Models.Student
         public string FirstName { get; set; }
         
         public string Surname { get; set; }
-
-        [DisplayName("Country")]
-        public string CountryName { get; set; }
         
         [DisplayName("Course Name")]
         public string CourseName { get; set; }

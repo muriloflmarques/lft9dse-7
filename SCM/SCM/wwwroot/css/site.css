@@ -77,3 +77,8 @@ table, th, td {
 th {
     background-color: lightseagreen !important;
 }
+
+.wide {
+    width: 100% !important;
+    resize: none !important;
+}

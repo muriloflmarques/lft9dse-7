@@ -20,10 +20,6 @@
                 @Html.EditorFor(x => x.StudentSearch.Surname)
 
 
-                @Html.LabelFor(x => x.StudentSearch.CountryName)
-                @Html.EditorFor(x => x.StudentSearch.CountryName)
-
-
                 @Html.LabelFor(x => x.StudentSearch.CourseName)
                 @Html.EditorFor(x => x.StudentSearch.CourseName)
 
@@ -51,6 +47,9 @@
                 <th><b>Surname</b></th>
                 <th><b>Date of Birth</b></th>
                 <th><b>Gender</b></th>
+                <th><b>Address nº 1</b></th>
+                <th><b>Address nº 2</b></th>
+                <th><b>Address nº 3</b></th>
                 <th><b>Edit</b></th>
                 <th><b>Delete</b></th>
             </tr>
@@ -58,15 +57,19 @@
         <tbody>
             @foreach (var student in Model.Students)
             {
-                <tr>
-                    <td>@student.Id</td>
-                    <td>@student.FirstName</td>
-                    <td>@student.Surname</td>
-                    <td>@Html.DisplayFor(x => student.DateOfBirth, "{0:dd/MM/yyyy}")</td>
-                    <td>@student.Gender</td>
-                    <td>@Html.ActionLink("Edit", "Edit", "Student", new { id = student.Id })</td>
-                    <td>@Html.ActionLink("X", "Delete", "Student", new { id = student.Id })</td>
-                </tr>
+            <tr>
+                <td>@Html.ActionLink("Courses", "AddCourses", "Student", new { id = student.Id })</td>
+                <td>@student.Id</td>
+                <td>@student.FirstName</td>
+                <td>@student.Surname</td>
+                <td>@Html.DisplayFor(x => student.DateOfBirth, "{0:dd/MM/yyyy}")</td>
+                <td>@student.Gender</td>
+                <td>@student.FirstAddress</td>
+                <td>@student.SecondAddress</td>
+                <td>@student.ThirdAddress</td>
+                <td>@Html.ActionLink("Edit", "Edit", "Student", new { id = student.Id })</td>
+                <td>@Html.ActionLink("X", "Delete", "Student", new { id = student.Id })</td>
+            </tr>
             }
         </tbody>
     </table>

@@ -1,5 +1,3 @@
-using System;
-
 namespace SCM.Models
 {
     public class ErrorViewModel
@@ -14,6 +12,12 @@ namespace SCM.Models
             this.DomainRulesException = true;
             this.BusinessLogicException = false;
         }
+
+        public void SetAsBusinessLogicException()
+        {
+            this.BusinessLogicException = true;
+            this.DomainRulesException = false;
+        }        
 
         public string ErrorMessage { get; private set; }
 

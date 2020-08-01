@@ -10,18 +10,26 @@ namespace Scm.Domain
     {
         protected Student() { }
 
-        public Student(string firstName, string surname, DateTime dateOfBirth, GenderEnum gender)
+        public Student(string firstName, string surname, DateTime dateOfBirth, GenderEnum gender,
+            string firstAddres, string secondAddres, string thirdAddres)
             : base()
         {
             this.FirstName = firstName;
             this.Surname = surname;
             this.DateOfBirth = dateOfBirth;
             this.Gender = gender;
+
+            this.FirstAddress = firstAddres;
+            this.SecondAddress = secondAddres;
+            this.ThirdAddress = thirdAddres;
         }
 
         private string _firstName;
         private string _surname;
         private DateTime _dateOfBirth;
+        private string _firstAddress;
+        private string _secnodAddress;
+        private string _thirdAddress;
 
         public string FirstName
         {
@@ -31,7 +39,7 @@ namespace Scm.Domain
                 if (string.IsNullOrWhiteSpace(value))
                     throw new DomainRulesException("A name is needed when creating a new Student");
 
-                if (value.Any(c=> char.IsDigit(c)))
+                if (value.Any(c => char.IsDigit(c)))
                     throw new DomainRulesException("The Student's name can not contain a number");
 
                 if (value.Length > 30)
@@ -39,7 +47,7 @@ namespace Scm.Domain
 
                 if (value.Length < 3)
                     throw new DomainRulesException("The Student's name can not have less than 3 characteres");
-                
+
                 _firstName = value;
             }
         }
@@ -47,7 +55,7 @@ namespace Scm.Domain
         public string Surname
         {
             get { return _surname; }
-            private set 
+            private set
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new DomainRulesException("A surname is needed when creating a new Student");
@@ -60,8 +68,8 @@ namespace Scm.Domain
 
                 if (value.Length < 3)
                     throw new DomainRulesException("The Student's surname can not have less than 3 characteres");
-               
-                _surname = value; 
+
+                _surname = value;
             }
         }
 
@@ -78,19 +86,71 @@ namespace Scm.Domain
                 if (value > DateTime.Now)
                     throw new DomainRulesException("Date of birth can not be setted in the future");
 
-                _dateOfBirth = value; 
+                _dateOfBirth = value;
             }
         }
 
-        public ICollection<Address> Addresses { get; private set; } = new HashSet<Address>();
+        public string FirstAddress
+        {
+            get { return _firstAddress; }
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new DomainRulesException("The first address is needed when creating a new Student");
+
+                if (value.Length > 200)
+                    throw new DomainRulesException("The Student's first address can not be longer than 200 characteres");
+
+                if (value.Length < 3)
+                    throw new DomainRulesException("The Student's first address can not have less than 3 characteres");
+
+                _firstAddress = value;
+            }
+        }
+
+        public string SecondAddress
+        {
+            get { return _secnodAddress; }
+            private set
+            {
+                if (value?.Length > 200)
+                    throw new DomainRulesException("The Student's second address can not be longer than 200 characteres");
+
+                if (value?.Length < 3)
+                    throw new DomainRulesException("The Student's second address can not have less than 3 characteres");
+
+                _secnodAddress = value;
+            }
+        }
+
+        public string ThirdAddress
+        {
+            get { return _thirdAddress; }
+            private set
+            {
+                if (value?.Length > 200)
+                    throw new DomainRulesException("The Student's third address can not be longer than 200 characteres");
+
+                if (value?.Length < 3)
+                    throw new DomainRulesException("The Student's third address can not have less than 3 characteres");
+
+                _thirdAddress = value;
+            }
+        }
+
         public ICollection<StudentCourse> StudentCourses { get; private set; } = new HashSet<StudentCourse>();
 
-        public void AlterBasicData(string firstName, string surname, DateTime dateOfBirth, GenderEnum gender)
+        public void AlterBasicData(string firstName, string surname, DateTime dateOfBirth, GenderEnum gender,
+            string firstAddres, string secondAddres, string thirdAddres)
         {
             this.FirstName = firstName;
             this.Surname = surname;
             this.DateOfBirth = dateOfBirth;
             this.Gender = gender;
+
+            this.FirstAddress = firstAddres ?? this.FirstAddress;
+            this.SecondAddress = secondAddres ?? this.SecondAddress;
+            this.ThirdAddress = thirdAddres ?? this.ThirdAddress;
         }
     }
 }

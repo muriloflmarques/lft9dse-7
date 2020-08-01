@@ -1,5 +1,4 @@
 ﻿using Scm.Infra.CrossCutting.Enum;
-using SCM_API.Models.Adreess;
 using SCM_API.Models.Course;
 using System;
 using System.ComponentModel;
@@ -20,7 +19,15 @@ namespace SCM_API.Models.Student
         public DateTime DateOfBirth { get; set; }
         public GenderEnum Gender { get; set; }
 
-        public AddressViewModel[] Addresses { get; set; }
+        [DisplayName("First Address")]
+        public string FirstAddress { get; set; }
+
+        [DisplayName("Second Address")]
+        public string SecondAddress { get; set; }
+
+        [DisplayName("Third Address")]
+        public string ThirdAddress { get; set; }
+
         public CourseViewModel[] Courses { get; set; }
     }
 }

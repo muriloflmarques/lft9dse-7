@@ -25,41 +25,75 @@
 <div>
     @using (Html.BeginForm("Edit", "Student", FormMethod.Post))
     {
-        <fieldset>
-            <legend>Student's new Data</legend>
+        <div style="width: 100%; float: left;">
+            <div id="div_studentData" style=" width: 40%; float: left;">
+                <fieldset>
+                    <legend>Student's new Data</legend>
 
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.FirstName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(x => x.FirstName)
+                    </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.FirstName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.FirstName)
-            </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Surname)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(x => x.Surname)
+                    </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Surname)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.Surname)
-            </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.DateOfBirth)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(x => x.DateOfBirth, "{0:dd/MM/yyyy}")
+                    </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.DateOfBirth)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.DateOfBirth, "{0:dd/MM/yyyy}")
-            </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Gender)
+                    </div>
+                    <div class="editor-label">
+                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Scm.Infra.CrossCutting.Enum.GenderEnum>()"></select>
+                    </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Gender)
+                </fieldset>
             </div>
-            <div class="editor-label">
-                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Scm.Infra.CrossCutting.Enum.GenderEnum>()"></select>
-            </div>
+            <div id="div_addressData" style="width: 40%; float: left;">
+                <fieldset>
+                    <legend>Address Data</legend>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.FirstAddress)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(x => x.FirstAddress)
+                    </div>
 
-            <button style="float:left;" type="submit" class="btn btn-info">Confirm</button>
-        </fieldset>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.SecondAddress)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(x => x.SecondAddress)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.ThirdAddress)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(x => x.ThirdAddress)
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <br />
+
+        <button style="float:left;" type="submit" class="btn btn-info">Confirm</button>
     }
 </div>
-
-@Html.ActionLink("Back", "Index", "Student")
+<br />
+<br />
+<div style="width: 100%; float: left; margin-top: 30px">
+    @Html.ActionLink("Back", "Index", "Student")
+</div>

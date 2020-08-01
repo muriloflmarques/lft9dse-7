@@ -8,8 +8,6 @@ namespace Smc.Infra.Data
         public ScmDbContext(DbContextOptions<ScmDbContext> dbContextOptions)
             : base(dbContextOptions) { }
 
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Country> Countries { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
@@ -32,47 +30,19 @@ namespace Smc.Infra.Data
             modelBuilder.Entity<Student>()
                 .Property(x => x.DateOfBirth)
                 .IsRequired();
+            
+            modelBuilder.Entity<Student>()
+               .Property(x => x.FirstAddress)
+               .HasMaxLength(200)
+               .IsRequired();
 
             modelBuilder.Entity<Student>()
-                .HasMany(st => st.Addresses)
-                .WithOne(ad => ad.Student)
-                .HasForeignKey(ad => ad.StudentId)
-                .OnDelete(DeleteBehavior.Cascade);
+               .Property(x => x.SecondAddress)
+               .HasMaxLength(200);
 
-
-            modelBuilder.Entity<Address>()
-                .HasKey(ad => ad.Id);
-
-            modelBuilder.Entity<Address>()
-                .Property(x => x.AddresLineOne)
-                .HasMaxLength(120)
-                .IsRequired();
-
-            modelBuilder.Entity<Address>()
-                .Property(x => x.AddresLineTwo)
-                .HasMaxLength(120);
-
-            modelBuilder.Entity<Address>()
-                .Property(x => x.City)
-                .HasMaxLength(100);
-
-            modelBuilder.Entity<Address>()
-                .Property(x => x.CountyOrProvince)
-                .HasMaxLength(100);
-
-            modelBuilder.Entity<Address>()
-                .HasOne(ad => ad.Country)
-                .WithMany(coun => coun.Addresses)
-                .HasForeignKey(ad => ad.Id);
-
-
-            modelBuilder.Entity<Country>()
-                .HasKey(coun => coun.Id);
-
-            modelBuilder.Entity<Country>()
-                .Property(x => x.Name)
-                .HasMaxLength(500)
-                .IsRequired();
+            modelBuilder.Entity<Student>()
+               .Property(x => x.ThirdAddress)
+               .HasMaxLength(200);
 
 
             modelBuilder.Entity<Course>()
@@ -113,9 +83,6 @@ namespace Smc.Infra.Data
                 .HasOne(stCo => stCo.Course)
                 .WithMany(co => co.StudentCourses)
                 .HasForeignKey(stCo => stCo.CourseId);
-
-
-            modelBuilder.Entity<Country>().HasData(this.GenerateCountries());
 
 
             //For the entities with BaseEntity inheritance logical delete is being applied,

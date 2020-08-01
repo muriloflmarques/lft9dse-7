@@ -136,7 +136,10 @@ namespace SCM_API
                     firstName: studentViewModel.FirstName,
                     surname: studentViewModel.Surname,
                     dateOfBirth: studentViewModel.DateOfBirth,
-                    gender: studentViewModel.Gender);
+                    gender: studentViewModel.Gender,
+                    firstAddres: studentViewModel.FirstAddress,
+                    secondAddres: studentViewModel.SecondAddress,
+                    thirdAddres: studentViewModel.ThirdAddress);
 
                 _studentRepository.Update(student);
 
@@ -171,6 +174,11 @@ namespace SCM_API
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult AddCourses(StudentViewModel studentViewModel)
+        {
+
         }
     }
 }

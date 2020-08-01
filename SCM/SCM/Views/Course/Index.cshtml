@@ -54,17 +54,17 @@
         <tbody>
             @foreach (var course in Model.Courses)
             {
-                <tr>
-                    <td>@course.Id</td>
-                    <td>@course.Name</td>
-                    <td>@course.TeacherName</td>
-                    <td>@course.Capacity</td>
-                    <td>@Html.DisplayFor(x => course.StartDate, "{0:dd/MM/yyyy}")</td>
-                    <td>@Html.DisplayFor(x => course.EndDate, "{0:dd/MM/yyyy}")</td>
-                    <td>@course.Code</td>
-                    <td>@Html.ActionLink("Edit", "Edit", "Course", new { id = course.Id })</td>
-                    <td>@Html.ActionLink("X", "Delete", "Course", new { id = course.Id })</td>
-                </tr>
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                <td>@course.TeacherName</td>
+                <td>@course.Capacity</td>
+                <td>@Html.DisplayFor(x => course.StartDate, "{0:dd/MM/yyyy}")</td>
+                <td>@Html.DisplayFor(x => course.EndDate, "{0:dd/MM/yyyy}")</td>
+                <td>@course.Code</td>
+                <td>@Html.ActionLink("Edit", "Edit", "Course", new { id = course.Id })</td>
+                <td>@Html.ActionLink("X", "Delete", "Course", new { id = course.Id })</td>
+            </tr>
             }
         </tbody>
     </table>

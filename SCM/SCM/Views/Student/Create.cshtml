@@ -1,5 +1,6 @@
 ﻿
 @model SCM_API.Models.Student.StudentCreateViewModel
+    iewModel
 
 @{
     ViewData["Title"] = "Create a whole new Student!";
@@ -22,41 +23,76 @@
 
     @using (Html.BeginForm("Create", "Student", FormMethod.Post))
     {
-        <fieldset>
-            <legend>Student Data</legend>
+        <div style="width: 100%; float: left;">
+            <div id="div_studentData" style=" width: 40%; float: left;">
+                <fieldset>
+                    <legend>Student Data</legend>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Student.FirstName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.Student.FirstName)
-            </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Student.FirstName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(x => x.Student.FirstName)
+                    </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Student.Surname)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.Student.Surname)
-            </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Student.Surname)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(x => x.Student.Surname)
+                    </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Student.DateOfBirth)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.Student.DateOfBirth, "{0:dd/MM/yyyy}")
-            </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Student.DateOfBirth)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(x => x.Student.DateOfBirth, "{0:dd/MM/yyyy}")
+                    </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Student.Gender)
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Student.Gender)
+                    </div>
+                    <div class="editor-label">
+                        <select asp-for="Student.Gender" asp-items="Html.GetEnumSelectList<Scm.Infra.CrossCutting.Enum.GenderEnum>()"></select>
+                    </div>
+                </fieldset>
             </div>
-            <div class="editor-label">
-                <select asp-for="Student.Gender" asp-items="Html.GetEnumSelectList<Scm.Infra.CrossCutting.Enum.GenderEnum>()"></select>
+            <div id="div_addressData" style="width: 40%; float: left;">
+                <fieldset>
+                    <legend>Address Data</legend>
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Student.FirstAddress)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(x => x.Student.FirstAddress)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Student.SecondAddress)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(x => x.Student.SecondAddress)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(x => x.Student.ThirdAddress)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(x => x.Student.ThirdAddress)
+                    </div>
+                </fieldset>
             </div>
+        </div>
 
+        <br />
 
-            <button style="float:left;" type="submit" class="btn btn-info">Create</button>
-        </fieldset>
+        <button style="float:left;" type="submit" class="btn btn-info">Create</button>
     }
+
 </div>
 
-<a href="~/">Back</a>
+<br />
+<br />
+<div style="width: 100%; float: left; margin-top: 30px">
+    <a href="~/">Back</a>
+</div>

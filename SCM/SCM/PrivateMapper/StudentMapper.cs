@@ -19,8 +19,9 @@ namespace SCM_API.Mapper
                 //Gender = EnumHelper.GetDescription<GenderEnum>(student.Gender),
                 Gender = student.Gender,
 
-                Addresses = student?.Addresses
-                    ?.Select(ad => { return ad.MapToViewModel(); })?.ToArray(),
+                FirstAddress = student.FirstAddress,
+                SecondAddress = student.SecondAddress,
+                ThirdAddress = student.ThirdAddress,
 
                 Courses = student.StudentCourses.Select(stCo => stCo.Course)
                     ?.Select(co => { return co.MapToViewModel(); })?.ToArray()
@@ -32,6 +33,9 @@ namespace SCM_API.Mapper
                 firstName: studentViewModel.FirstName,
                 surname: studentViewModel.Surname,
                 dateOfBirth: studentViewModel.DateOfBirth,
-                gender: studentViewModel.Gender);
+                gender: studentViewModel.Gender,
+                firstAddres: studentViewModel.FirstAddress,
+                secondAddres: studentViewModel.SecondAddress,
+                thirdAddres: studentViewModel.ThirdAddress);
     }
 }

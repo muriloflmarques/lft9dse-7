@@ -79,6 +79,11 @@ namespace Smc.Infra.Data
                 .HasKey(co => co.Id);
 
             modelBuilder.Entity<Course>()
+                .Property(x => x.Name)
+                .HasMaxLength(150)
+                .IsRequired();
+
+            modelBuilder.Entity<Course>()
                 .Property(x => x.TeacherName)
                 .HasMaxLength(150)
                 .IsRequired();

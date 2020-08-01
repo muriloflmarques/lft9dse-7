@@ -11,6 +11,18 @@
 <br />
 
 <div>
+    @if (ViewBag.Error?.DomainRulesException ?? false)
+    {
+        <label style="color:red">There's something wrong with the data you informed</label>
+        <br />
+    }
+    @if (ViewBag.Error?.ErrorMessage != null)
+    {
+        <label style="color:red">ViewBag.Error.ErrorMessage</label>
+    }
+</div>
+
+<div>
     @using (Html.BeginForm("Edit", "Course", FormMethod.Post))
     {
         <fieldset>

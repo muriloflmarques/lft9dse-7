@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Scm.Infra.CrossCutting.CustomException;
 using Scm.Infra.CrossCutting.DTOs;
 using Scm.Infra.Data.Interface;
 using Scm.Service.Interface;
+using SCM.Models;
 using SCM_API.Mapper;
 using SCM_API.Models.Student;
 using Smc.Infra.Data.Interface;
+using System;
 using System.Linq;
 
 namespace SCM_API
@@ -76,41 +79,59 @@ namespace SCM_API
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                studentCreateViewModel.Error = new ErrorViewModel(ex.Message);
+
+                if (ex is DomainRulesException)
+                    studentCreateViewModel.Error.SetAsDomainRulesException();
+
+                return View(studentCreateViewModel);
             }
         }
 
         [HttpGet()]
         public ActionResult Edit(int id)
         {
-            var dbSet = _studentRepository.AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSet());
-
-            var student = _studentRepository.SelectById(dbSet, id);
-
-            if (student == null)
+            try
             {
-                //the better approach would be redirecting to ErrorPage
-                return RedirectToAction(nameof(Index));
+                var dbSet = _studentRepository.AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSet());
+
+                var student = _studentRepository.SelectById(dbSet, id);
+
+                //if student Null, then the better approach would be redirecting to ErrorPage
+                if (student == null)
+                    throw new BusinessLogicException($"Error while searching for Student with Id {id}");
+
+                var studentViewModel = student.MapToViewModel();
+
+                return View(studentViewModel);
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = new ErrorViewModel(ex.Message);
 
-            var studentViewModel = student.MapToViewModel();
+                if (ex is DomainRulesException)
+                    ViewBag.Error.SetAsDomainRulesException();
 
-            return View(studentViewModel);
+                return View(new StudentViewModel());
+            }
         }
 
         [HttpPost()]
         public ActionResult Edit(StudentViewModel studentViewModel)
         {
-            var dbSet = _studentRepository
-                .AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSetAsNoTracking());
-
-            var student = _studentRepository.SelectById(dbSet, studentViewModel.Id);
-
-            //if student Null, then the better approach would be redirecting to ErrorPage
-            if (student != null)
+            try
             {
+                var dbSet = _studentRepository
+                    .AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSetAsNoTracking());
+
+                var student = _studentRepository.SelectById(dbSet, studentViewModel.Id);
+
+                //if student Null, then the better approach would be redirecting to ErrorPage
+                if (student == null)
+                    throw new BusinessLogicException($"Error while searching for Student with Id {studentViewModel.Id}");
+
                 student.AlterBasicData(
                     firstName: studentViewModel.FirstName,
                     surname: studentViewModel.Surname,
@@ -120,9 +141,18 @@ namespace SCM_API
                 _studentRepository.Update(student);
 
                 _unitOfWork.Commit();
-            }
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = new ErrorViewModel(ex.Message);
+
+                if (ex is DomainRulesException)
+                    ViewBag.Error.SetAsDomainRulesException();
+
+                return View(studentViewModel);
+            }
         }
 
         [HttpGet()]

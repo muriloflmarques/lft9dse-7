@@ -4,8 +4,20 @@ namespace SCM.Models
 {
     public class ErrorViewModel
     {
-        public string RequestId { get; set; }
+        public ErrorViewModel(string errorMessage)
+        {
+            this.ErrorMessage = errorMessage;
+        }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public void SetAsDomainRulesException()
+        {
+            this.DomainRulesException = true;
+            this.BusinessLogicException = false;
+        }
+
+        public string ErrorMessage { get; private set; }
+
+        public bool DomainRulesException { get; private set; }
+        public bool BusinessLogicException { get; private set; }
     }
 }

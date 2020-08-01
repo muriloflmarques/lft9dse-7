@@ -13,9 +13,9 @@ namespace Scm.Domain
             int capacity) : base()
         {
             this.Name = name;
-            this.TeacherName = teacherName;
-            this.StartDate = startDate;
+            this.TeacherName = teacherName;            
             this.EndDate = endDate;
+            this.StartDate = startDate;
             this.Capacity = capacity;
         }
 
@@ -37,7 +37,7 @@ namespace Scm.Domain
                     throw new DomainRulesException("The Student's name can not be longer than 150 characteres");
 
                 if (value.Length < 3)
-                    throw new DomainRulesException("The Student's name can not be shorter than 3 characteres");
+                    throw new DomainRulesException("The Student's name can not have less than 3 characteres");
 
                 _name = value; 
             }
@@ -55,7 +55,7 @@ namespace Scm.Domain
                     throw new DomainRulesException("The Teacher's name can not be longer than 150 characteres");
 
                 if (value.Length < 3)
-                    throw new DomainRulesException("The Teacher's name can not be shorter than 3 characteres");
+                    throw new DomainRulesException("The Teacher's name can not have less than 3 characteres");
 
                 _teacherName = value;
             }
@@ -66,6 +66,10 @@ namespace Scm.Domain
             get { return _startDate; }
             private set
             {
+                if (value.Year < 1900)
+                    throw new DomainRulesException("The Course's start date is marked to be greater than 1900");
+
+                //It's necessary to set EndDate before StartDate to assure the validation below
                 if (value > this._endDate)
                     throw new DomainRulesException($"The Course's start date ({value.DefaultDateTimeFormat()}) can not be greater than end date ({this._endDate.DefaultDateTimeFormat()})");
 
@@ -78,7 +82,8 @@ namespace Scm.Domain
             get { return _endDate; }
             private set
             {
-                //It's necessary to set StartDate before EndDate to assure the validation below
+                if (value.Year < 1900)
+                    throw new DomainRulesException("The Course's end date is marked to be greater than 1900");
 
                 if (value < this._startDate)
                     throw new DomainRulesException($"The Course's end date ({value.DefaultDateTimeFormat()}) can not be less than start date ({this._startDate.DefaultDateTimeFormat()})");
@@ -110,8 +115,8 @@ namespace Scm.Domain
         {
             this.Name = name;
             this.TeacherName = teacherName;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
+            this.EndDate = endDate; 
+            this.StartDate = startDate;            
             this.Capacity = capacity;
         }
     }

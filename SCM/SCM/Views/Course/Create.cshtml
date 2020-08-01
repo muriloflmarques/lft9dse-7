@@ -8,6 +8,18 @@
 <h1>Create Course</h1>
 
 <div>
+    @if (@Model.Error?.DomainRulesException ?? false)
+    {
+        <label style="color:red">There's something wrong with the data you informed</label>
+        <br />
+    }
+    @if (@Model.Error?.ErrorMessage != null)
+    {
+        <label style="color:red">@Model.Error.ErrorMessage</label>
+    }
+</div>
+
+<div>
     @using (Html.BeginForm("Create", "Course", FormMethod.Post))
     {
         <fieldset>

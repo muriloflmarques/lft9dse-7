@@ -2,6 +2,7 @@
 using Scm.Infra.CrossCutting.Enum;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Scm.Domain
 {
@@ -30,11 +31,14 @@ namespace Scm.Domain
                 if (string.IsNullOrWhiteSpace(value))
                     throw new DomainRulesException("A name is needed when creating a new Student");
 
+                if (value.Any(c=> char.IsDigit(c)))
+                    throw new DomainRulesException("The Student's name can not contain a number");
+
                 if (value.Length > 30)
                     throw new DomainRulesException("The Student's name can not be longer than 30 characteres");
 
                 if (value.Length < 3)
-                    throw new DomainRulesException("The Student's name can not be shorter than 3 characteres");
+                    throw new DomainRulesException("The Student's name can not have less than 3 characteres");
                 
                 _firstName = value;
             }
@@ -48,11 +52,14 @@ namespace Scm.Domain
                 if (string.IsNullOrWhiteSpace(value))
                     throw new DomainRulesException("A surname is needed when creating a new Student");
 
+                if (value.Any(c => char.IsDigit(c)))
+                    throw new DomainRulesException("The Student's surname can not contain a number");
+
                 if (value.Length > 120)
                     throw new DomainRulesException("The Student's surname can not be longer than 120 characteres");
 
                 if (value.Length < 3)
-                    throw new DomainRulesException("The Student's surname can not be shorter than 3 characteres");
+                    throw new DomainRulesException("The Student's surname can not have less than 3 characteres");
                
                 _surname = value; 
             }
@@ -65,6 +72,9 @@ namespace Scm.Domain
             get { return _dateOfBirth; }
             private set
             {
+                if (value.Year < 1900)
+                    throw new DomainRulesException("Date of birth's year is marked to be greater than 1900");
+
                 if (value > DateTime.Now)
                     throw new DomainRulesException("Date of birth can not be setted in the future");
 

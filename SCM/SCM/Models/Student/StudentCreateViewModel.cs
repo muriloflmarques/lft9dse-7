@@ -1,4 +1,5 @@
-﻿using SCM_API.Models.Adreess;
+﻿using SCM.Models;
+using SCM_API.Models.Adreess;
 
 namespace SCM_API.Models.Student
 {
@@ -7,5 +8,7 @@ namespace SCM_API.Models.Student
         public StudentViewModel Student { get; set; }
 
         public AddressViewModel[] Addresses { get; set; }
+
+        public ErrorViewModel Error { get; set; }
     }
 }

@@ -11,10 +11,23 @@
 <br />
 
 <div>
+    @if (ViewBag.Error?.DomainRulesException ?? false)
+    {
+        <label style="color:red">There's something wrong with the data you informed</label>
+        <br />
+    }
+    @if (ViewBag.Error?.ErrorMessage != null)
+    {
+        <label style="color:red">ViewBag.Error.ErrorMessage</label>
+    }
+</div>
+
+<div>
     @using (Html.BeginForm("Edit", "Student", FormMethod.Post))
     {
         <fieldset>
             <legend>Student's new Data</legend>
+
 
             <div class="editor-label">
                 @Html.LabelFor(x => x.FirstName)
@@ -43,7 +56,6 @@
             <div class="editor-label">
                 <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Scm.Infra.CrossCutting.Enum.GenderEnum>()"></select>
             </div>
-
 
             <button style="float:left;" type="submit" class="btn btn-info">Confirm</button>
         </fieldset>

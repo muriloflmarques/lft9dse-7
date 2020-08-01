@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Scm.Infra.CrossCutting.CustomException;
 using Scm.Infra.CrossCutting.DTOs;
 using Scm.Infra.Data.Interface;
 using Scm.Service.Interface;
+using SCM.Models;
 using SCM_API.Mapper;
 using SCM_API.Models.Course;
 using Smc.Infra.Data.Interface;
+using System;
 using System.Linq;
 
 namespace SCM_API
@@ -76,54 +79,83 @@ namespace SCM_API
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                courseCreateViewModel.Error = new ErrorViewModel(ex.Message);
+
+                if (ex is DomainRulesException)
+                    courseCreateViewModel.Error.SetAsDomainRulesException();
+
+                return View(courseCreateViewModel);
             }
         }
 
         [HttpGet()]
         public ActionResult Edit(int id)
         {
-            var dbSet = _courseRepository.AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSet());
-
-            var course = _courseRepository.SelectById(dbSet, id);
-
-            if (course == null)
+            try
             {
-                //the better approach would be redirecting to ErrorPage
-                return RedirectToAction(nameof(Index));
+                var dbSet = _courseRepository.AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSet());
+
+                var course = _courseRepository.SelectById(dbSet, id);
+
+                if (course == null)
+                {
+                    //the better approach would be redirecting to ErrorPage
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var courseEditViewModel = course.MapToViewModel();
+
+                return View(courseEditViewModel);
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = new ErrorViewModel(ex.Message);
 
-            var viewMap = course.MapToViewModel();
+                if (ex is DomainRulesException)
+                    ViewBag.Error.SetAsDomainRulesException();
 
-            return View(viewMap);
+                return View(new CourseViewModel());
+            }
         }
 
         [HttpPost()]
         public ActionResult Edit(CourseViewModel courseViewModel)
         {
-            var dbSet = _courseRepository
+            try
+            {
+                var dbSet = _courseRepository
                 .AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSetAsNoTracking());
 
-            var course = _courseRepository.SelectById(dbSet, courseViewModel.Id);
+                var course = _courseRepository.SelectById(dbSet, courseViewModel.Id);
 
-            //if course Null, then the better approach would be redirecting to ErrorPage
-            if (course != null)
-            {
-                course.AlterBasicData(
-                    name: courseViewModel.Name,
-                    teacherName: courseViewModel.TeacherName,
-                    startDate: courseViewModel.StartDate,
-                    endDate: courseViewModel.EndDate,
-                    capacity: courseViewModel.Capacity);
+                //if course Null, then the better approach would be redirecting to ErrorPage
+                if (course != null)
+                {
+                    course.AlterBasicData(
+                        name: courseViewModel.Name,
+                        teacherName: courseViewModel.TeacherName,
+                        startDate: courseViewModel.StartDate,
+                        endDate: courseViewModel.EndDate,
+                        capacity: courseViewModel.Capacity);
 
-                _courseRepository.Update(course);
+                    _courseRepository.Update(course);
 
-                _unitOfWork.Commit();
+                    _unitOfWork.Commit();
+                }
+
+                return RedirectToAction(nameof(Index));
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = new ErrorViewModel(ex.Message);
 
-            return RedirectToAction(nameof(Index));
+                if (ex is DomainRulesException)
+                    ViewBag.Error.SetAsDomainRulesException();
+
+                return View(courseViewModel);
+            }
         }
 
         [HttpGet()]

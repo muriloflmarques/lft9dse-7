@@ -1,10 +1,19 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Scm.Domain;
+using Scm.Infra.CrossCutting.DTOs;
+using Scm.Infra.Data;
+using Scm.Infra.Data.Interface;
+using Scm.Service;
+using Scm.Service.Interface;
+using SCM_API.Models.Student;
 using Smc.Infra.Data;
+using Smc.Infra.Data.Interface;
 
 namespace SCM
 {
@@ -22,11 +31,25 @@ namespace SCM
         {
             services.AddControllersWithViews();
 
+            var mapperConfiguration = new MapperConfiguration(configure =>
+            {
+                configure.CreateMap<SearchStudentDto, SearchStudentViewModel>();
+            });
+
+            IMapper mapper = mapperConfiguration.CreateMapper();
+            
+            services.AddSingleton(mapper);
+
             services.AddDbContext<ScmDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetSection("ConnectionsStrings:SCM_Dev_ConnectionString").Value);
-                options.EnableSensitiveDataLogging(true);
+                options.UseSqlServer(Configuration.GetSection("ConnectionsStrings:SCM_Dev_ConnectionString").Value);                
             });
+
+            services.AddScoped<ScmDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +77,7 @@ namespace SCM
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Student}/{action=Index}/{id?}");
             });
         }
     }

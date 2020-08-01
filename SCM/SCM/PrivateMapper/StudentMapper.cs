@@ -1,5 +1,6 @@
 ﻿using Scm.Domain;
 using Scm.Infra.CrossCutting.Enum;
+using Scm.Infra.CrossCutting.Helper;
 using Scm.Infra.CrossCutting.Helpers;
 using SCM_API.Models.Student;
 using System.Linq;
@@ -16,14 +17,14 @@ namespace SCM_API.Mapper
 
                 FirstName = student.FirstName,
                 Surname = student.Surname,
-                DateOfBirth = student.DateOfBirth.ToString("dd/MM/yyyy"),
+                DateOfBirth = student.DateOfBirth.FormatDateTimeToViewModel(),
                 Gender = EnumHelper.GetDescription<GenderEnum>(student.Gender),
 
                 Addresses = student?.Addresses
-                    .Select(ad => { return ad.MapToViewModel(); })?.ToArray(),
+                    ?.Select(ad => { return ad.MapToViewModel(); })?.ToArray(),
 
                 Courses = student.StudentCourses.Select(stCo => stCo.Course)
-                .Select(co => { return co.MapToViewModel(); }).ToArray()
+                    ?.Select(co => { return co.MapToViewModel(); })?.ToArray()
             };
         }
     }

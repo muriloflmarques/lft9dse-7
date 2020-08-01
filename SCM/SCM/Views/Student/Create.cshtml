@@ -1,0 +1,31 @@
+﻿
+@model SCM_API.Models.Student.StudentViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Student</h1>
+
+<div>
+    @using (Html.BeginForm())
+    {
+    <fieldset>
+        <legend>User Data</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(x => x.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(x => x.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Courses[0].Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(x => x.Courses[0].Name)
+        </div>
+    </fieldset>
+    }
+</div>

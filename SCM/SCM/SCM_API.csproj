@@ -9,9 +9,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Scm.Domain\Scm.Domain.csproj" />
     <ProjectReference Include="..\Scm.Infra.CrossCutting\Scm.Infra.CrossCutting.csproj" />
     <ProjectReference Include="..\Scm.Infra.Data\Scm.Infra.Data.csproj" />
     <ProjectReference Include="..\Scm.Service\Scm.Service.csproj" />

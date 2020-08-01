@@ -19,20 +19,20 @@ namespace Smc.Infra.Data
 
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ScmDbContext _tmsDbContext;
+        private readonly ScmDbContext _scmDbContext;
         private IDbContextTransaction _transaction;
 
         public List<RawSQlCommand> RawSQlCommandList { get; private set; } = new List<RawSQlCommand>();
 
-        public UnitOfWork(ScmDbContext tmsDbContext)
+        public UnitOfWork(ScmDbContext scmDbContext)
         {
-            this._tmsDbContext = tmsDbContext;
+            this._scmDbContext = scmDbContext;
         }
 
         public void BeginTransaction()
         {
             _transaction =
-                _tmsDbContext.Database.CurrentTransaction ?? _tmsDbContext.Database.BeginTransaction();
+                _scmDbContext.Database.CurrentTransaction ?? _scmDbContext.Database.BeginTransaction();
         }
 
         public void Commit()
@@ -44,14 +44,14 @@ namespace Smc.Infra.Data
                 foreach (var rawCommand in RawSQlCommandList)
                 {
                     if (rawCommand.ParamsForSql != null)                    
-                        _tmsDbContext.Database.ExecuteSqlRaw(rawCommand.RawSqlString, rawCommand.ParamsForSql);
+                        _scmDbContext.Database.ExecuteSqlRaw(rawCommand.RawSqlString, rawCommand.ParamsForSql);
                     
                     else                   
-                        _tmsDbContext.Database.ExecuteSqlRaw(rawCommand.RawSqlString);
+                        _scmDbContext.Database.ExecuteSqlRaw(rawCommand.RawSqlString);
                     
                 }
 
-                _tmsDbContext.SaveChanges();
+                _scmDbContext.SaveChanges();
                 _transaction.Commit();
             }
             catch

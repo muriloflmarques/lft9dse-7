@@ -9,11 +9,11 @@ namespace Smc.Infra.Data
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        protected readonly ScmDbContext _tmsDbContext;
+        protected readonly ScmDbContext _scmDbContext;
 
-        public BaseRepository(ScmDbContext tmsDbContext)
+        public BaseRepository(ScmDbContext scmDbContext)
         {
-            this._tmsDbContext = tmsDbContext;
+            this._scmDbContext = scmDbContext;
         }
 
         public void Delete(T obj)
@@ -30,7 +30,7 @@ namespace Smc.Infra.Data
 
         public void Insert(T obj)
         {
-            _tmsDbContext.Add(obj);
+            _scmDbContext.Add(obj);
         }
 
         public void Insert(IEnumerable<T> objs)
@@ -53,7 +53,7 @@ namespace Smc.Infra.Data
         public void Update(T obj)
         {
             obj.SetChangeDate();
-            this._tmsDbContext.Update(obj);
+            this._scmDbContext.Update(obj);
         }
 
         public void Update(IEnumerable<T> objs)
@@ -64,7 +64,7 @@ namespace Smc.Infra.Data
 
         public void Dispose()
         {
-            this._tmsDbContext?.Dispose();
+            this._scmDbContext?.Dispose();
         }
 
         private void CheckIfNull(T obj)

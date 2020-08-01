@@ -14,8 +14,9 @@ namespace Scm.Infra.Data
         }
 
         public override IQueryable<Student> AddDefaultIncludeIntoDbSet(IQueryable<Student> dbSet) =>
-            dbSet.Include(st => st.Addresses).ThenInclude(ad => ad.Country)
-            .Include(st => st.StudentCourses).ThenInclude(stCo => stCo.Course);
+            dbSet
+                .Include(st => st.Addresses).ThenInclude(ad => ad.Country)
+                .Include(st => st.StudentCourses).ThenInclude(stCo => stCo.Course);
 
         public override IQueryable<Student> GetDbSet() =>
             this._scmDbContext.Set<Student>();

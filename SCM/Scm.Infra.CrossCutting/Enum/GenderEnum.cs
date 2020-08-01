@@ -1,26 +1,35 @@
-﻿namespace Scm.Infra.CrossCutting.Enum
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Scm.Infra.CrossCutting.Enum
 {
     public enum GenderEnum
     {
+        [Display(Name = "Rather Not To Say")]
         [EnumValueAsText("Rather Not To Say")]
-        RatherNotToSay = 100,
+        RatherNotToSay = 0,
 
+        [Display(Name = "Female")]
         [EnumValueAsText("Female")]
-        Female = 0,
+        Female = 1,
 
+        [Display(Name = "Male")]
         [EnumValueAsText("Male")]
-        Male = 1,
+        Male = 2,
 
+        [Display(Name = "Nonbinary")]
         [EnumValueAsText("Nonbinary")]
-        Nonbinary = 2,
+        Nonbinary = 3,
 
+        [Display(Name = "Queer")]
         [EnumValueAsText("Queer")]
-        Queer = 3,
+        Queer = 4,
 
+        [Display(Name = "Trans")]
         [EnumValueAsText("Trans")]
-        Trans = 4,
+        Trans = 5,
 
+        [Display(Name = "Other")]
         [EnumValueAsText("Other")]
-        Other = 5
+        Other = 6
     }
 }

@@ -113,6 +113,17 @@ namespace Smc.Infra.Data
             modelBuilder.Entity<Country>().HasData(this.GenerateCountries());
 
 
+            //For the entities with BaseEntity inheritance logical delete is being applied,
+            //thus it's necessery to ensure that all the queries will force not to bring
+            //deleted elements by using HasQueryFilter
+            //this can be overrided by code using IgnoreQueryFilters()
+            modelBuilder.Entity<Student>()
+                .HasQueryFilter(x => x.DeleteDate == null);
+
+            modelBuilder.Entity<Course>()
+                .HasQueryFilter(x => x.DeleteDate == null);
+
+
             base.OnModelCreating(modelBuilder);
         }
     }

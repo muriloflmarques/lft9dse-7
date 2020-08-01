@@ -14,7 +14,7 @@ namespace Scm.Domain
             this.Name = name;
         }
 
-        public int Id { get; set; }
+        public int Id { get; protected set; }
         public string Name { get; private set; }
         public ICollection<Address> Addresses { get; protected set; }
 

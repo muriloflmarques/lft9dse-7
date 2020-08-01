@@ -1,4 +1,8 @@
-﻿namespace Scm.Infra.CrossCutting.Helpers
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
+
+namespace Scm.Infra.CrossCutting.Helpers
 {
     public static class EnumHelper
     {

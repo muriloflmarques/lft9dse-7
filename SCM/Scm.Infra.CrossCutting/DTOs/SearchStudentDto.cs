@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scm.Infra.CrossCutting.Enum;
+using System;
 
 namespace Scm.Infra.CrossCutting.DTOs
 {
@@ -6,7 +7,6 @@ namespace Scm.Infra.CrossCutting.DTOs
     {
         public string FirstName { get; set; }
         public string Surname { get; set; }
-
         public string CountryName { get; set; }
 
         public string CourseName { get; set; }

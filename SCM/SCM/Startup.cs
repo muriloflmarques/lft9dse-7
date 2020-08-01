@@ -14,6 +14,7 @@ using Scm.Service.Interface;
 using SCM_API.Models.Student;
 using Smc.Infra.Data;
 using Smc.Infra.Data.Interface;
+using System;
 
 namespace SCM
 {
@@ -33,16 +34,21 @@ namespace SCM
 
             var mapperConfiguration = new MapperConfiguration(configure =>
             {
-                configure.CreateMap<SearchStudentDto, SearchStudentViewModel>();
+                configure.CreateMap<SearchStudentViewModel, SearchStudentDto>()
+                    .ForMember(dto => dto.CourseDate, option =>
+                    {
+                        option.PreCondition(vModel => vModel.CourseDate != DateTime.MinValue);
+                        option.MapFrom(vModel => vModel.CourseDate);
+                    });
             });
 
             IMapper mapper = mapperConfiguration.CreateMapper();
-            
+
             services.AddSingleton(mapper);
 
             services.AddDbContext<ScmDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetSection("ConnectionsStrings:SCM_Dev_ConnectionString").Value);                
+                options.UseSqlServer(Configuration.GetSection("ConnectionsStrings:SCM_Dev_ConnectionString").Value);
             });
 
             services.AddScoped<ScmDbContext>();

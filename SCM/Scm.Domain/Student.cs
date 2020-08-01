@@ -8,12 +8,13 @@ namespace Scm.Domain
     {
         protected Student() { }
 
-        public Student(string firstName, string surname, DateTime dateOfBirth)
+        public Student(string firstName, string surname, DateTime dateOfBirth, GenderEnum gender)
             : base()
         {
             this.FirstName = firstName;
             this.Surname = surname;
             this.DateOfBirth = dateOfBirth;
+            this.Gender = gender;
         }
 
         private string _firstName;
@@ -42,5 +43,13 @@ namespace Scm.Domain
 
         public ICollection<Address> Addresses { get; private set; } = new HashSet<Address>();
         public ICollection<StudentCourse> StudentCourses { get; private set; } = new HashSet<StudentCourse>();
+
+        public void AlterBasicData(string firstName, string surname, DateTime dateOfBirth, GenderEnum gender)
+        {
+            this.FirstName = firstName;
+            this.Surname = surname;
+            this.DateOfBirth = dateOfBirth;
+            this.Gender = gender;
+        }
     }
 }

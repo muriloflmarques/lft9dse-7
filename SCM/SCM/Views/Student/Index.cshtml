@@ -6,7 +6,68 @@
 }
 
 <h1>This is the student search area</h1>
-@Html.ActionLink("Create new", "Create", "Student")
 <div>
+    @using (Html.BeginForm("Index", "Student", FormMethod.Post))
+    {
+        <fieldset>
+            <legend>Search Params</legend>
 
+            <div class="editor-label">
+                @Html.LabelFor(x => x.SearchStudent.FirstName)
+                @Html.EditorFor(x => x.SearchStudent.FirstName)
+
+                @Html.LabelFor(x => x.SearchStudent.Surname)
+                @Html.EditorFor(x => x.SearchStudent.Surname)
+
+
+                @Html.LabelFor(x => x.SearchStudent.CountryName)
+                @Html.EditorFor(x => x.SearchStudent.CountryName)
+
+
+                @Html.LabelFor(x => x.SearchStudent.CourseName)
+                @Html.EditorFor(x => x.SearchStudent.CourseName)
+
+                @Html.LabelFor(x => x.SearchStudent.CourseDate)
+                @Html.EditorFor(x => x.SearchStudent.CourseDate, "{0:dd/MM/yyyy}")
+
+
+                @Html.LabelFor(x => x.SearchStudent.CourseTeacherName)
+                @Html.EditorFor(x => x.SearchStudent.CourseTeacherName)
+            </div>
+
+            <button style="float:left;" type="submit" class="btn btn-info">Search!</button>
+        </fieldset>
+    }
+</div>
+
+<br />
+<br />
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th><b>Id</b></th>
+                <th><b>First Name</b></th>
+                <th><b>Surname</b></th>
+                <th><b>Date of Birth</b></th>
+                <th><b>Gender</b></th>
+                <th><b>Edit</b></th>
+                <th><b>Delete</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.FirstName</td>
+                    <td>@student.Surname</td>
+                    <td>@Html.DisplayFor(x => student.DateOfBirth, "{0:dd/MM/yyyy}")</td>
+                    <td>@student.Gender</td>
+                    <td>@Html.ActionLink("Edit", "Edit", "Student", new { id = student.Id })</td>
+                    <td>@Html.ActionLink("X", "Delete", "Student", new { id = student.Id })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

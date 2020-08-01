@@ -4,10 +4,13 @@ namespace SCM_API.Models.Course
 {
     public class CourseViewModel
     {
+        [DisplayName("Course Id")]
         public int Id { get; set; }
 
         [DisplayName("Course Name")]
         public string Name { get; set; }
+
+        [DisplayName("Course Capacity")]
         public int Capacity { get; set; }
 
         [DisplayName("Teacher Name")]
@@ -18,6 +21,8 @@ namespace SCM_API.Models.Course
 
         [DisplayName("End Date")]
         public string EndDate { get; set; }
+
+        [DisplayName("Course Code")]
         public string Code { get; set; }
     }
 }

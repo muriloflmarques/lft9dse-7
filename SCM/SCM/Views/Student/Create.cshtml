@@ -1,5 +1,5 @@
 ﻿
-@model SCM_API.Models.Student.StudentViewModel
+@model SCM_API.Models.Student.StudentCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -8,24 +8,43 @@
 <h1>Create Student</h1>
 
 <div>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", "Student", FormMethod.Post))
     {
     <fieldset>
         <legend>User Data</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(x => x.FirstName)
+            @Html.LabelFor(x => x.Student.FirstName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(x => x.FirstName)
+            @Html.EditorFor(x => x.Student.FirstName)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(x => x.Courses[0].Name)
+            @Html.LabelFor(x => x.Student.Surname)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(x => x.Courses[0].Name)
+            @Html.EditorFor(x => x.Student.Surname)
         </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Student.DateOfBirth)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(x => x.Student.DateOfBirth, "{0:dd/MM/yyyy}")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Student.Gender)
+        </div>
+        <div class="editor-label">
+            <select asp-for="Student.Gender" asp-items="Html.GetEnumSelectList<Scm.Infra.CrossCutting.Enum.GenderEnum>()"></select>
+        </div>
+
+
+        <button style="float:left;" type="submit" class="btn btn-info">Create</button>
     </fieldset>
     }
 </div>
+
+<a href="~/">Back</a>

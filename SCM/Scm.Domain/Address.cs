@@ -23,7 +23,7 @@
         private Country _country;
         private Student _student;
 
-        public int Id { get; protected private set; }
+        public int Id { get; protected set; }
 
         public string AddresLineOne
         {

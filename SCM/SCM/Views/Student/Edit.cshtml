@@ -1,0 +1,53 @@
+﻿
+@model SCM_API.Models.Student.StudentViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Student @Html.Raw(@Model.FirstName.ToString()) @Html.Raw(@Model.Surname.ToString())</h1>
+
+<br />
+<br />
+
+<div>
+    @using (Html.BeginForm("Edit", "Student", FormMethod.Post))
+    {
+        <fieldset>
+            <legend>User Data</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.FirstName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Surname)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.Surname)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.DateOfBirth)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.DateOfBirth, "{0:dd/MM/yyyy}")
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Gender)
+            </div>
+            <div class="editor-label">
+                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Scm.Infra.CrossCutting.Enum.GenderEnum>()"></select>
+            </div>
+
+
+            <button style="float:left;" type="submit" class="btn btn-info">Edit</button>
+        </fieldset>
+    }
+</div>
+
+@Html.ActionLink("Back", "Index", "Student")

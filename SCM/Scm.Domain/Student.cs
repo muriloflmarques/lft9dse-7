@@ -28,7 +28,7 @@ namespace Scm.Domain
             private set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new DomainRulesException("A name is needed when creating a new Task");
+                    throw new DomainRulesException("A name is needed when creating a new Student");
 
                 if (value.Length > 30)
                     throw new DomainRulesException("The Student's name can not be longer than 30 characteres");
@@ -46,13 +46,13 @@ namespace Scm.Domain
             private set 
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new DomainRulesException("A name is needed when creating a new Task");
+                    throw new DomainRulesException("A surname is needed when creating a new Student");
 
                 if (value.Length > 120)
-                    throw new DomainRulesException("The Student's name can not be longer than 120 characteres");
+                    throw new DomainRulesException("The Student's surname can not be longer than 120 characteres");
 
                 if (value.Length < 3)
-                    throw new DomainRulesException("The Student's name can not be shorter than 3 characteres");
+                    throw new DomainRulesException("The Student's surname can not be shorter than 3 characteres");
                
                 _surname = value; 
             }

@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Scm.Domain;
 using Scm.Infra.CrossCutting.DTOs;
 using Scm.Infra.Data;
 using Scm.Infra.Data.Interface;
@@ -56,6 +55,9 @@ namespace SCM
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ICourseRepository, CourseRepository>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

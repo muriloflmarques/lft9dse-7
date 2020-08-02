@@ -42,23 +42,24 @@
     <table>
         <thead>
             <tr>
-                <th><b>Id</b></th>
-                <th><b>First Name</b></th>
-                <th><b>Surname</b></th>
-                <th><b>Date of Birth</b></th>
-                <th><b>Gender</b></th>
-                <th><b>Address nº 1</b></th>
-                <th><b>Address nº 2</b></th>
-                <th><b>Address nº 3</b></th>
-                <th><b>Edit</b></th>
-                <th><b>Delete</b></th>
+                <th style="background-color: lightgreen !important"><b>Courses</b></th>
+                <th style="background-color: lightgreen !important"><b>Id</b></th>
+                <th style="background-color: lightgreen !important"><b>First Name</b></th>
+                <th style="background-color: lightgreen !important"><b>Surname</b></th>
+                <th style="background-color: lightgreen !important"><b>Date of Birth</b></th>
+                <th style="background-color: lightgreen !important"><b>Gender</b></th>
+                <th style="background-color: lightgreen !important"><b>Address nº 1</b></th>
+                <th style="background-color: lightgreen !important"><b>Address nº 2</b></th>
+                <th style="background-color: lightgreen !important"><b>Address nº 3</b></th>
+                <th style="background-color: lightgreen !important"><b>Edit</b></th>
+                <th style="background-color: lightgreen !important"><b>Delete</b></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var student in Model.Students)
             {
             <tr>
-                <td>@Html.ActionLink("Courses", "AddCourses", "Student", new { id = student.Id })</td>
+                <td>@Html.ActionLink("Courses", "CheckCourse", "Course", new { idStudent = student.Id })</td>
                 <td>@student.Id</td>
                 <td>@student.FirstName</td>
                 <td>@student.Surname</td>

@@ -5,5 +5,6 @@ namespace Scm.Infra.Data.Interface
 {
     public  interface ICourseRepository : IBaseRepository<Course>
     {
+        Course GetById(int id);
     }
 }

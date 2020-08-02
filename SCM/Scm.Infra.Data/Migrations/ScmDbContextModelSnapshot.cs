@@ -33,7 +33,9 @@ namespace Scm.Infra.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -58,6 +60,9 @@ namespace Scm.Infra.Data.Migrations
                         .HasMaxLength(150);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });

@@ -152,5 +152,35 @@ namespace Scm.Domain
             this.SecondAddress = secondAddres ?? this.SecondAddress;
             this.ThirdAddress = thirdAddres ?? this.ThirdAddress;
         }
+
+        public void AddCourse(Course course)
+        {
+            if (course == null)
+                throw new BusinessLogicException("A Course must be informed to enroll a Student");
+
+            if (this.StudentCourses?.Count >= 5)
+                throw new BusinessLogicException($"The Student {this.FirstName} have reached the maximum number of enrolled Courses");
+
+            if(!course.CourseCanEnrollStudents())
+                throw new DomainRulesException($"The Course {course.Name} have reached the maximum number of enrolled Students");
+
+            var studentCourse = new StudentCourse(this, course);
+
+            this.StudentCourses.Add(studentCourse);
+        }
+
+        public void RemoveCourse(Course course)
+        {
+            if (course == null)
+                throw new BusinessLogicException("A Course must be informed to remove a Student");
+
+            var studentCourse = this.StudentCourses.FirstOrDefault(stCo => stCo.Course.Id == course.Id);
+
+            if (studentCourse != null)
+                this.StudentCourses.Remove(studentCourse);
+
+            //if (!course.StudentCourses.Any(stCo => stCo.Student.Id == this.Id))
+            //    course.RemoveStudent(this);
+        }
     }
 }

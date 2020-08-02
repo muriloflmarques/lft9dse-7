@@ -2,6 +2,8 @@
 using Scm.Infra.CrossCutting.Helper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Scm.Domain
 {
@@ -13,10 +15,12 @@ namespace Scm.Domain
             int capacity) : base()
         {
             this.Name = name;
-            this.TeacherName = teacherName;            
+            this.TeacherName = teacherName;
             this.EndDate = endDate;
             this.StartDate = startDate;
             this.Capacity = capacity;
+
+            Code = this.GenerateRandomCode();
         }
 
         private string _name;
@@ -24,11 +28,12 @@ namespace Scm.Domain
         private DateTime _startDate;
         private DateTime _endDate;
         private int _capacity;
+        private string _code;
 
         public string Name
         {
             get { return _name; }
-            private set 
+            private set
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new DomainRulesException("A name is needed when creating a new Course");
@@ -39,7 +44,7 @@ namespace Scm.Domain
                 if (value.Length < 3)
                     throw new DomainRulesException("The Student's name can not have less than 3 characteres");
 
-                _name = value; 
+                _name = value;
             }
         }
 
@@ -88,20 +93,33 @@ namespace Scm.Domain
                 if (value < this._startDate)
                     throw new DomainRulesException($"The Course's end date ({value.DefaultDateTimeFormat()}) can not be less than start date ({this._startDate.DefaultDateTimeFormat()})");
 
-                _endDate = value; 
+                _endDate = value;
             }
         }
 
-        public string Code { get; private set; }
-    
+        public string Code
+        {
+            get { return _code; }
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new DomainRulesException("A Code is needed when creating a new Course");
+
+                if (value.Length > 100)
+                    throw new DomainRulesException("The Course's code can not be longer than 100 characteres");
+
+                _code = value;
+            }
+        }
+
         public int Capacity
         {
             get { return _capacity; }
-            private set 
+            private set
             {
-                if(value <= 0)
+                if (value <= 0)
                     throw new DomainRulesException($"A Course's capacity can not be negative nor iqual to zero");
-                
+
                 if (value < this._capacity && value < this.StudentCourses?.Count)
                     throw new DomainRulesException($"It's impossibel to reduce Course's capacity to {value} because this Course already has {this.StudentCourses?.Count} Students enrolled");
 
@@ -115,9 +133,22 @@ namespace Scm.Domain
         {
             this.Name = name;
             this.TeacherName = teacherName;
-            this.EndDate = endDate; 
-            this.StartDate = startDate;            
+            this.EndDate = endDate;
+            this.StartDate = startDate;
             this.Capacity = capacity;
+        }
+
+        public bool CourseCanEnrollStudents() =>
+            this.Capacity > this.StudentCourses?.Count;
+
+        private string GenerateRandomCode()
+        {
+            Random random = new Random();
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            
+            return new string(Enumerable.Repeat(chars, 12)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

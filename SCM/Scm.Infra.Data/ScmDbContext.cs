@@ -70,6 +70,14 @@ namespace Smc.Infra.Data
                 .Property(x => x.Capacity)
                 .IsRequired();
 
+            modelBuilder.Entity<Course>()
+                .HasIndex(x => x.Code)
+                .IsUnique();
+            
+            modelBuilder.Entity<Course>()
+                .Property(x => x.Code)
+                .HasMaxLength(100)
+                .IsRequired();
 
             modelBuilder.Entity<StudentCourse>()
                 .HasKey(stCo => new { stCo.StudentId, stCo.CourseId });

@@ -1,0 +1,91 @@
+﻿@model SCM_API.Models.Course.CheckCourseViewModel
+
+@{
+    ViewData["Title"] = "Check Courses";
+}
+
+@if (ViewBag?.IncludingErrorMessage != null)
+{
+    <h3 style="color: red;">Include error @Html.Raw(ViewBag.IncludingErrorMessage.ToString())</h3>
+}
+@if (ViewBag?.RemovingErrorMessage != null)
+{
+    <h3 style="color: red;">Remove error @Html.Raw(ViewBag.RemovingErrorMessage.ToString())</h3>
+}
+
+@if (ViewBag?.ErrorMessage != null)
+{
+    <h3 style="color: red;">@Html.Raw(ViewBag.ErrorMessage.ToString())</h3>
+}
+else
+{
+    <h1>Add Courses to @Html.Raw(ViewBag.Student.FirstName.ToString()) @Html.Raw(@ViewBag.Student.Surname.ToString())</h1>
+}
+
+<div style="float:left; width:100%">
+    <div id="div_enrolledCourses">
+        <table>
+            <thead>
+                <tr>
+                    <th style="background-color:salmon !important"><b>Enrolled</b></th>
+                    <th style="background-color:salmon !important"><b>Id</b></th>
+                    <th style="background-color:salmon !important"><b>Course Name</b></th>
+                    <th style="background-color:salmon !important"><b>Teacher Name</b></th>
+                    <th style="background-color:salmon !important"><b>Capacity</b></th>
+                    <th style="background-color:salmon !important"><b>Start Date</b></th>
+                    <th style="background-color:salmon !important"><b>End Date</b></th>
+                    <th style="background-color:salmon !important"><b>Course Code</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in @Model.EnrolledCourses)
+                {
+                    <tr>
+                        <td>@Html.ActionLink("Remove", "Remove", "Course", new { idStudent = ViewBag.Student.Id, idCourse = course.Id })</td>
+                        <td>@course.Id</td>
+                        <td>@course.Name</td>
+                        <td>@course.TeacherName</td>
+                        <td>@course.Capacity</td>
+                        <td>@Html.DisplayFor(x => course.StartDate, "{0:dd/MM/yyyy}")</td>
+                        <td>@Html.DisplayFor(x => course.EndDate, "{0:dd/MM/yyyy}")</td>
+                        <td>@course.Code</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div id="div_availableCourses">
+        <table>
+            <thead>
+                <tr>
+                    <th style="background-color:lightslategray !important"><b>Available</b></th>
+                    <th style="background-color:lightslategray !important"><b>Id</b></th>
+                    <th style="background-color:lightslategray !important"><b>Course Name</b></th>
+                    <th style="background-color:lightslategray !important"><b>Teacher Name</b></th>
+                    <th style="background-color:lightslategray !important"><b>Capacity</b></th>
+                    <th style="background-color:lightslategray !important"><b>Start Date</b></th>
+                    <th style="background-color:lightslategray !important"><b>End Date</b></th>
+                    <th style="background-color:lightslategray !important"><b>Course Code</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in @Model.AvailableCourses)
+                {
+                    <tr>
+                        <td>@Html.ActionLink("Include", "Include", "Course", new { idStudent = ViewBag.Student.Id, idCourse = course.Id })</td>
+                        <td>@course.Id</td>
+                        <td>@course.Name</td>
+                        <td>@course.TeacherName</td>
+                        <td>@course.Capacity</td>
+                        <td>@Html.DisplayFor(x => course.StartDate, "{0:dd/MM/yyyy}")</td>
+                        <td>@Html.DisplayFor(x => course.EndDate, "{0:dd/MM/yyyy}")</td>
+                        <td>@course.Code</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -6,6 +6,7 @@ using Scm.Infra.Data.Interface;
 using Scm.Service.Interface;
 using SCM.Models;
 using SCM_API.Mapper;
+using SCM_API.Models.Course;
 using SCM_API.Models.Student;
 using Smc.Infra.Data.Interface;
 using System;
@@ -174,11 +175,6 @@ namespace SCM_API
             }
 
             return RedirectToAction(nameof(Index));
-        }
-
-        public ActionResult AddCourses(StudentViewModel studentViewModel)
-        {
-
         }
     }
 }

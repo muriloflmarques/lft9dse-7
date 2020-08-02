@@ -10,7 +10,7 @@ using Smc.Infra.Data;
 namespace Scm.Infra.Data.Migrations
 {
     [DbContext(typeof(ScmDbContext))]
-    [Migration("20200801205126_001")]
+    [Migration("20200802011003_001")]
     partial class _001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,9 @@ namespace Scm.Infra.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -60,6 +62,9 @@ namespace Scm.Infra.Data.Migrations
                         .HasMaxLength(150);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });

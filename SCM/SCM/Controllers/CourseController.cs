@@ -21,14 +21,21 @@ namespace SCM_API
         private readonly ICourseService _courseService;
         private readonly ICourseRepository _courseRepository;
 
+        private readonly IStudentService _studentService;
+        private readonly IStudentRepository _studentRepository;
+
         public CourseController(IMapper mapper, IUnitOfWork unitOfWork,
-            ICourseService courseService, ICourseRepository courseRepository)
+            ICourseService courseService, ICourseRepository courseRepository,
+            IStudentService studentService, IStudentRepository studentRepository)
         {
             this._mapper = mapper;
             this._unitOfWork = unitOfWork;
 
             this._courseService = courseService;
             this._courseRepository = courseRepository;
+
+            this._studentService = studentService;
+            this._studentRepository = studentRepository;
         }
 
         [HttpGet()]
@@ -126,7 +133,7 @@ namespace SCM_API
             try
             {
                 var dbSet = _courseRepository
-                .AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSetAsNoTracking());
+                    .AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSetAsNoTracking());
 
                 var course = _courseRepository.SelectById(dbSet, courseViewModel.Id);
 
@@ -164,16 +171,89 @@ namespace SCM_API
             var dbSet = _courseRepository
                 .AddDefaultIncludeIntoDbSet(_courseRepository.GetDbSetAsNoTracking());
 
-            var COURSE = _courseRepository.SelectById(dbSet, id);
+            var course = _courseRepository.SelectById(dbSet, id);
 
             //if course Null, then the better approach would be redirecting to ErrorPage
-            if (COURSE != null)
+            if (course != null)
             {
-                _courseRepository.Delete(COURSE);
+                _courseRepository.Delete(course);
                 _unitOfWork.Commit();
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet()]
+        public ActionResult CheckCourse(int idStudent)
+        {
+            var checkCourseViewModel = new CheckCourseViewModel();
+
+            try
+            {
+                if (TempData["IncludingErrorMessage"] != null)
+                    ViewBag.IncludingErrorMessage = TempData["IncludingErrorMessage"].ToString();
+             
+                if (TempData["RemovingErrorMessage"] != null)
+                    ViewBag.RemovingErrorMessage = TempData["RemovingErrorMessage"].ToString();
+
+                var dbSet = _studentRepository
+                        .AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSetAsNoTracking());
+
+                var student = _studentRepository.SelectById(dbSet, idStudent);
+
+                //if Null, then the better approach would be redirecting to ErrorPage
+                if (student == null)
+                    return RedirectToAction(nameof(Index));
+
+                ViewBag.Student = student;
+
+                checkCourseViewModel.AvailableCourses = _courseService.SelectStudentsAvailableCourses(idStudent)
+                    .Select(co => { return co.MapToViewModel(); }).ToArray();
+
+                checkCourseViewModel.EnrolledCourses = _courseService.SelectStudentsEnrolledCoursesTo(idStudent)
+                    .Select(co => { return co.MapToViewModel(); }).ToArray();
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return View(checkCourseViewModel);
+        }
+
+        [HttpGet()]
+        public ActionResult Include(int idStudent, int idCourse)
+        {
+            try
+            {
+                _studentService.IncludeCourseInStudent(idStudent: idStudent, idCourse: idCourse);
+
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                TempData["IncludingErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToAction("CheckCourse", new { idStudent });
+        }
+
+        [HttpGet()]
+        public ActionResult Remove(int idStudent, int idCourse)
+        {
+            try
+            {
+                _studentService.RemoveCourseFromStudent(idStudent: idStudent, idCourse: idCourse);
+
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                TempData["RemovingErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToAction("CheckCourse", new { idStudent });
         }
     }
 }

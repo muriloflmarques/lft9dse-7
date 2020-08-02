@@ -20,7 +20,7 @@ namespace Scm.Infra.Data.Migrations
                     TeacherName = table.Column<string>(maxLength: 150, nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(maxLength: 100, nullable: false),
                     Capacity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -73,6 +73,12 @@ namespace Scm.Infra.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_Code",
+                table: "Courses",
+                column: "Code",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentCourses_CourseId",

@@ -24,7 +24,9 @@ namespace SCM_API.Mapper
                 ThirdAddress = student.ThirdAddress,
 
                 Courses = student.StudentCourses.Select(stCo => stCo.Course)
-                    ?.Select(co => { return co.MapToViewModel(); })?.ToArray()
+                    ?.Select(co => { return co.MapToViewModel(); })?.ToArray(),
+
+
             };
         }
 

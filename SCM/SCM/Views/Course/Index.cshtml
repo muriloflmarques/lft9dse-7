@@ -36,6 +36,7 @@
 <br />
 <br />
 
+
 <div>
     <table>
         <thead>
@@ -44,6 +45,7 @@
                 <th><b>Course Name</b></th>
                 <th><b>Teacher Name</b></th>
                 <th><b>Capacity</b></th>
+                <th><b>Availability</b></th>
                 <th><b>Start Date</b></th>
                 <th><b>End Date</b></th>
                 <th><b>Course Code</b></th>
@@ -59,6 +61,7 @@
                 <td>@course.Name</td>
                 <td>@course.TeacherName</td>
                 <td>@course.Capacity</td>
+                <td>@course.Availability</td>
                 <td>@Html.DisplayFor(x => course.StartDate, "{0:dd/MM/yyyy}")</td>
                 <td>@Html.DisplayFor(x => course.EndDate, "{0:dd/MM/yyyy}")</td>
                 <td>@course.Code</td>

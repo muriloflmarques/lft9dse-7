@@ -3,6 +3,7 @@ using SCM_API.Models.Course;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SCM_API.Models.Student
 {
@@ -28,6 +29,8 @@ namespace SCM_API.Models.Student
         [DisplayName("Third Address")]
         public string ThirdAddress { get; set; }
 
-        public CourseViewModel[] Courses { get; set; }
+        public CourseViewModel[] Courses { get; set; } = new CourseViewModel[] { };
+
+        public int Enrolled { get { return this.Courses.Count(); }  }
     }
 }

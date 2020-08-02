@@ -17,7 +17,8 @@ namespace SCM_API.Mapper
                 StartDate = course.StartDate,
                 EndDate = course.EndDate,
                 Capacity = course.Capacity,
-                Code = course.Code
+                Code = course.Code,
+                Availability = course.Capacity - (course.StudentCourses?.Count ?? 0)
             };
         }
 

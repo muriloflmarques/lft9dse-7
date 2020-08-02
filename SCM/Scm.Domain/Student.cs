@@ -159,7 +159,7 @@ namespace Scm.Domain
                 throw new BusinessLogicException("A Course must be informed to enroll a Student");
 
             if (this.StudentCourses?.Count >= 5)
-                throw new BusinessLogicException($"The Student {this.FirstName} have reached the maximum number of enrolled Courses");
+                throw new BusinessLogicException($"The Student {this.FirstName} have reached the maximum number of Courses to enroll");
 
             if(!course.CourseCanEnrollStudents())
                 throw new DomainRulesException($"The Course {course.Name} have reached the maximum number of enrolled Students");

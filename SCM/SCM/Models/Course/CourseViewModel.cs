@@ -27,5 +27,6 @@ namespace SCM_API.Models.Course
 
         [DisplayName("Course Code")]
         public string Code { get; set; }
+        public int Availability { get; set; }
     }
 }

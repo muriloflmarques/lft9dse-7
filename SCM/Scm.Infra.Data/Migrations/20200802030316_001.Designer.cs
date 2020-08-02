@@ -10,7 +10,7 @@ using Smc.Infra.Data;
 namespace Scm.Infra.Data.Migrations
 {
     [DbContext(typeof(ScmDbContext))]
-    [Migration("20200802011003_001")]
+    [Migration("20200802030316_001")]
     partial class _001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

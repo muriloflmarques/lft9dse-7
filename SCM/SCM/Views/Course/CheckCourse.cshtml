@@ -19,7 +19,7 @@
 }
 else
 {
-    <h1>Add Courses to @Html.Raw(ViewBag.Student.FirstName.ToString()) @Html.Raw(@ViewBag.Student.Surname.ToString())</h1>
+    <h1>Add Courses to @Html.Raw(ViewBag.Student.FirstName.ToString()) @Html.Raw(@ViewBag.Student.Surname.ToString()) - @Html.Raw(@ViewBag.Student.Id.ToString())</h1>
 }
 
 <div style="float:left; width:100%">
@@ -32,6 +32,7 @@ else
                     <th style="background-color:salmon !important"><b>Course Name</b></th>
                     <th style="background-color:salmon !important"><b>Teacher Name</b></th>
                     <th style="background-color:salmon !important"><b>Capacity</b></th>
+                    <th style="background-color:lightslategray !important"><b>Availability</b></th>
                     <th style="background-color:salmon !important"><b>Start Date</b></th>
                     <th style="background-color:salmon !important"><b>End Date</b></th>
                     <th style="background-color:salmon !important"><b>Course Code</b></th>
@@ -46,6 +47,7 @@ else
                         <td>@course.Name</td>
                         <td>@course.TeacherName</td>
                         <td>@course.Capacity</td>
+                        <td>@course.Availability</td>
                         <td>@Html.DisplayFor(x => course.StartDate, "{0:dd/MM/yyyy}")</td>
                         <td>@Html.DisplayFor(x => course.EndDate, "{0:dd/MM/yyyy}")</td>
                         <td>@course.Code</td>
@@ -66,6 +68,7 @@ else
                     <th style="background-color:lightslategray !important"><b>Course Name</b></th>
                     <th style="background-color:lightslategray !important"><b>Teacher Name</b></th>
                     <th style="background-color:lightslategray !important"><b>Capacity</b></th>
+                    <th style="background-color:lightslategray !important"><b>Availability</b></th>
                     <th style="background-color:lightslategray !important"><b>Start Date</b></th>
                     <th style="background-color:lightslategray !important"><b>End Date</b></th>
                     <th style="background-color:lightslategray !important"><b>Course Code</b></th>
@@ -80,6 +83,7 @@ else
                         <td>@course.Name</td>
                         <td>@course.TeacherName</td>
                         <td>@course.Capacity</td>
+                        <td>@course.Availability</td>
                         <td>@Html.DisplayFor(x => course.StartDate, "{0:dd/MM/yyyy}")</td>
                         <td>@Html.DisplayFor(x => course.EndDate, "{0:dd/MM/yyyy}")</td>
                         <td>@course.Code</td>

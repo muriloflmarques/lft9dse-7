@@ -43,6 +43,7 @@
         <thead>
             <tr>
                 <th style="background-color: lightgreen !important"><b>Courses</b></th>
+                <th style="background-color: lightgreen !important"><b>Enrolled</b></th>
                 <th style="background-color: lightgreen !important"><b>Id</b></th>
                 <th style="background-color: lightgreen !important"><b>First Name</b></th>
                 <th style="background-color: lightgreen !important"><b>Surname</b></th>
@@ -60,6 +61,7 @@
             {
             <tr>
                 <td>@Html.ActionLink("Courses", "CheckCourse", "Course", new { idStudent = student.Id })</td>
+                <td>@student.Enrolled</td>
                 <td>@student.Id</td>
                 <td>@student.FirstName</td>
                 <td>@student.Surname</td>

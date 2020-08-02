@@ -12,6 +12,7 @@ namespace Scm.Service
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _studentRepository;
+
         private readonly ICourseService _courseService;
 
         public StudentService(IStudentRepository studentRepository, ICourseService courseService)
@@ -24,9 +25,9 @@ namespace Scm.Service
             _studentRepository.GetById(id);
 
         public Student GetByIdOrThrowException(int id) =>
-            this.GetById(id) 
+            this.GetById(id)
             ??
-            throw new BusinessLogicException($"Student not found - Id: {id}");        
+            throw new BusinessLogicException($"Student not found - Id: {id}");
 
         public void IncludeCourseInStudent(int idStudent, int idCourse)
         {
@@ -41,11 +42,13 @@ namespace Scm.Service
         public void RemoveCourseFromStudent(int idStudent, int idCourse)
         {
             var student = this.GetByIdOrThrowException(idStudent);
-            var course = _courseService.GetByIdOrThrowException(idCourse);
 
-            student.RemoveCourse(course);
+            var studentCourse = student.StudentCourses
+                ?.FirstOrDefault(stCo => stCo.Student.Id == student.Id && stCo.Course.Id == idCourse)
+                ??
+                throw new BusinessLogicException("The informed Course does not have the current Student as enrolled");
 
-            _studentRepository.Update(student);
+            _studentRepository.RemoveStudentCourse(studentCourse);
         }
 
         public IEnumerable<Student> SelectStudents(StudentSearchDto searchStudentDto)
@@ -53,10 +56,10 @@ namespace Scm.Service
             var dbSet = _studentRepository.AddDefaultIncludeIntoDbSet(_studentRepository.GetDbSetAsNoTracking());
 
             return _studentRepository.SelectByQuery(dbSet,
-                st => 
+                st =>
                     (string.IsNullOrWhiteSpace(searchStudentDto.FirstName) || st.FirstName.Contains(searchStudentDto.FirstName))
                     &&
-                    (string.IsNullOrWhiteSpace(searchStudentDto.Surname) || st.Surname.Contains(searchStudentDto.Surname))                    
+                    (string.IsNullOrWhiteSpace(searchStudentDto.Surname) || st.Surname.Contains(searchStudentDto.Surname))
                     &&
                     (string.IsNullOrWhiteSpace(searchStudentDto.CourseName) || st.StudentCourses.Any(stCo => stCo.Course.Name.Contains(searchStudentDto.CourseName)))
                     &&

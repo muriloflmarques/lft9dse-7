@@ -16,7 +16,8 @@ namespace SCM_API.Mapper
                 TeacherName = course.TeacherName,
                 StartDate = course.StartDate,
                 EndDate = course.EndDate,
-                Capacity = course.Capacity
+                Capacity = course.Capacity,
+                Code = course.Code
             };
         }
 

@@ -8,7 +8,7 @@ namespace Scm.Infra.Data
 {
     public class StudentRepository : BaseRepository<Student>, IStudentRepository
     {
-        public StudentRepository(ScmDbContext scmDbContext) : base(scmDbContext)        {        }
+        public StudentRepository(ScmDbContext scmDbContext) : base(scmDbContext) { }
 
         public override IQueryable<Student> AddDefaultIncludeIntoDbSet(IQueryable<Student> dbSet) =>
             dbSet
@@ -26,5 +26,8 @@ namespace Scm.Infra.Data
 
         public override IQueryable<Student> GetDbSetAsNoTracking() =>
             this.GetDbSet().AsNoTracking();
+
+        public void RemoveStudentCourse(StudentCourse studentCourse) =>
+            _scmDbContext.Remove(studentCourse);
     }
 }

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCM_API", "SCM\SCM_API.csproj", "{172EBCFE-5212-43A2-B9B6-353D08351EB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCM_API", "SCM\SCM_API.csproj", "{172EBCFE-5212-43A2-B9B6-353D08351EB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scm.Domain", "Scm.Domain\Scm.Domain.csproj", "{AE3DE6F7-6395-4D54-9C48-810F0979522E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scm.Domain", "Scm.Domain\Scm.Domain.csproj", "{AE3DE6F7-6395-4D54-9C48-810F0979522E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scm.Infra.Data", "Scm.Infra.Data\Scm.Infra.Data.csproj", "{3AA6A685-537D-4F72-9BA7-535627D40631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scm.Infra.Data", "Scm.Infra.Data\Scm.Infra.Data.csproj", "{3AA6A685-537D-4F72-9BA7-535627D40631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scm.Infra.CrossCutting", "Scm.Infra.CrossCutting\Scm.Infra.CrossCutting.csproj", "{5647B45E-5A82-4546-80FB-6670B9B4FF86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scm.Infra.CrossCutting", "Scm.Infra.CrossCutting\Scm.Infra.CrossCutting.csproj", "{5647B45E-5A82-4546-80FB-6670B9B4FF86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scm.Service", "Scm.Service\Scm.Service.csproj", "{52AB360E-7375-4135-A0AF-E4C44A9030E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scm.Service", "Scm.Service\Scm.Service.csproj", "{52AB360E-7375-4135-A0AF-E4C44A9030E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
